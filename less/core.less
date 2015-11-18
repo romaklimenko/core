@@ -1,12 +1,14 @@
-/*
-blue rgb(18, 86, 135)
-teal rgb(0, 137, 152)
-orange rgb(239, 130, 0)
-purple rgb(101, 31, 118)
-gray rgb(159, 164, 166)
-red rgb(220, 41, 30)
-black rgb(17, 28, 36)
-*/
+@sc-blue:   rgb(18, 86, 135);
+@sc-teal:   rgb(0, 137, 152);
+@sc-orange: rgb(239, 130, 0);
+@sc-purple: rgb(101, 31, 118);
+@sc-gray:   rgb(159, 164, 166);
+@sc-red:    rgb(220, 41, 30);
+@sc-black:  rgb(17, 28, 36);
+
+@vsc-blue:       rgb(0, 114, 197);
+@vsc-light-gray: rgb(243, 243, 243);
+@vsc-dark-gray:  rgb(108, 108, 108);
 
 html, body {
   height: 100%;
@@ -35,8 +37,8 @@ html, body {
 }
 
 .tree {
-  background-color: rgb(243, 243, 243);
-  color: #6C6C6C;
+  background-color: @vsc-light-gray;
+  color: @vsc-dark-gray;
   font-family: HelveticaNeue-Light,sans-serif;
   font-size: 13px;
   overflow: scroll;
@@ -65,7 +67,7 @@ html, body {
 footer {
   bottom: 0;
   color: white;
-  background-color: rgb(0, 114, 197);
+  background-color: @vsc-blue;
   position: absolute;
   width: 100%;
 }
