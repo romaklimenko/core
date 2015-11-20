@@ -14,7 +14,7 @@
     "url": "git+https://github.com/romaklimenko/core.git"
   },
   "author": "romaklimenko",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/romaklimenko/core/issues"
   },
