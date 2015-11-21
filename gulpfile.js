@@ -1,9 +1,9 @@
 var gulp = require('gulp');
 var less = require('gulp-less');
+var del = require('del');
 var path = require('path');
 
-
-gulp.task('default', ['copy', 'less']);
+gulp.task('default', ['clean', 'copy', 'less']);
 
 gulp.task('less', function () {
   return gulp.src('./less/**/*.less')
@@ -18,3 +18,9 @@ gulp.task('copy', function () {
     .src('css/*')
     .pipe(gulp.dest('./dist/css'))
 })
+
+gulp.task('clean', function(){
+  return del([
+    'dist/**/*'
+  ]);
+});
