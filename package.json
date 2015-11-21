@@ -5,7 +5,12 @@
   "devDependencies": {
     "del": "*",
     "gulp": "*",
-    "gulp-less": "*"
+    "gulp-less": "*",
+    "gulp-typescript": "*",
+    "gulp-babel": "*",
+    "gulp-sourcemaps": "*",
+    "babel-polyfill": "*",
+    "babel-preset-es2015": "*"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

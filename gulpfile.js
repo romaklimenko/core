@@ -1,26 +1,44 @@
-var gulp = require('gulp');
-var less = require('gulp-less');
-var del = require('del');
-var path = require('path');
+// system
+var path        = require('path');
 
-gulp.task('default', ['clean', 'copy', 'less']);
+// node_modules
+var babel       = require('gulp-babel');
+var del         = require('del');
+var gulp        = require('gulp');
+var less        = require('gulp-less');
+var sourcemaps  = require('gulp-sourcemaps');
+var ts          = require('gulp-typescript');
 
-gulp.task('less', function () {
-  return gulp.src('./less/**/*.less')
+var tsProject = ts.createProject('./ts/tsconfig.json');
+
+gulp.task('default', ['copy', 'less', 'ts']);
+
+gulp.task('clean', function(){
+  return del(['dist/**/*']);
+});
+
+gulp.task('copy', ['clean'], function () {
+  gulp.src([
+      'index.html',
+      '*css/**/*',
+      '*img/**/*'
+  ])
+  .pipe(gulp.dest('dist'));
+});
+
+gulp.task('less', ['clean'], function () {
+  return gulp.src('less/**/*.less')
     .pipe(less({
       paths: [ path.join(__dirname, 'less') ]
     }))
-    .pipe(gulp.dest('./dist/css'));
+    .pipe(gulp.dest('dist/css'));
 });
 
-gulp.task('copy', function () {
-  return gulp
-    .src('css/*')
-    .pipe(gulp.dest('./dist/css'))
-})
-
-gulp.task('clean', function(){
-  return del([
-    'dist/**/*'
-  ]);
+gulp.task('ts', ['clean'], function(){
+  return gulp.src('ts/**/*.ts')
+    .pipe(sourcemaps.init())
+    .pipe(ts(tsProject))
+    .pipe(babel())
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest('dist/js'));
 });
