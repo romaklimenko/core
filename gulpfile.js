@@ -3,7 +3,7 @@ var less = require('gulp-less');
 var path = require('path');
 
 
-gulp.task('default', ['less']);
+gulp.task('default', ['copy', 'less']);
 
 gulp.task('less', function () {
   return gulp.src('./less/**/*.less')
@@ -12,3 +12,9 @@ gulp.task('less', function () {
     }))
     .pipe(gulp.dest('./dist/css'));
 });
+
+gulp.task('copy', function () {
+  return gulp
+    .src('css/*')
+    .pipe(gulp.dest('./dist/css'))
+})
