@@ -9,7 +9,7 @@ var less        = require('gulp-less');
 var sourcemaps  = require('gulp-sourcemaps');
 var ts          = require('gulp-typescript');
 
-var tsProject = ts.createProject('./ts/tsconfig.json');
+var tsProject = ts.createProject('tsconfig.json');
 
 gulp.task('default', ['copy', 'less', 'ts']);
 
@@ -20,6 +20,7 @@ gulp.task('clean', function(){
 gulp.task('copy', ['clean'], function () {
   gulp.src([
       'index.html',
+      'package.json',
       '*css/**/*',
       '*img/**/*'
   ])
@@ -35,10 +36,10 @@ gulp.task('less', ['clean'], function () {
 });
 
 gulp.task('ts', ['clean'], function(){
-  return gulp.src('ts/**/*.ts')
+  return gulp.src(['ts/**/*.ts', 'main.ts'])
     .pipe(sourcemaps.init())
     .pipe(ts(tsProject))
     .pipe(babel())
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('dist/js'));
+    .pipe(gulp.dest('dist'));
 });

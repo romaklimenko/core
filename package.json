@@ -12,7 +12,9 @@
     "babel-polyfill": "*",
     "babel-preset-es2015": "*"
   },
+  "main": "main.js",
   "scripts": {
+    "start": "electron main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
