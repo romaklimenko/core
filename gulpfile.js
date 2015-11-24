@@ -22,7 +22,8 @@ gulp.task('copy', ['clean'], function () {
       'index.html',
       'package.json',
       '*css/**/*',
-      '*img/**/*'
+      '*img/**/*',
+      '*lib/**/*'
   ])
   .pipe(gulp.dest('dist'));
 });
