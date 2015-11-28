@@ -7,10 +7,6 @@
     "gulp": "*",
     "gulp-less": "*",
     "gulp-typescript": "*",
-    "gulp-babel": "*",
-    "gulp-sourcemaps": "*",
-    "babel-polyfill": "*",
-    "babel-preset-es2015": "*",
     "electron-prebuilt": "*"
   },
   "main": "main.js",
