@@ -2,6 +2,7 @@
   "name": "core",
   "dependencies": {
     "bootstrap": "*",
+    "flux": "*",
     "react": "*"
   }
 }
