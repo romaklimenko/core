@@ -1,4 +1,5 @@
 /// <reference path="typings/node/node.d.ts" />
+'use strict';
 
 let app = require('app');  // Module to control application life.
 let BrowserWindow = require('browser-window');  // Module to create native browser window.
