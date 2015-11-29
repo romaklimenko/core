@@ -1,7 +1,6 @@
 /// <reference path="../../typings/react/react-global.d.ts" />
-'use strict';
 
-let mountNode: any = document.getElementsByTagName("footer")[0];
+'use strict';
 
 interface IFooter {
   database: string;
@@ -9,8 +8,8 @@ interface IFooter {
 
 class Footer extends React.Component<IFooter, {}> {
   public render() {
-    return <div>{this.props.database}</div>;
+    return  <footer id="footer">
+              <div>{this.props.database}</div>
+            </footer>
   }
 }
-
-ReactDOM.render(<Footer database="master" />, mountNode);
