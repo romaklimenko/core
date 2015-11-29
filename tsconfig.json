@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
+    "jsx": "react",
     "target": "ES6",
-    "out": "main.js"
+    "outFile": "core.js",
+    "removeComments": true
   }
 }

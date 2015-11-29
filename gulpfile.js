@@ -7,12 +7,10 @@ var gulp        = require('gulp');
 var less        = require('gulp-less');
 var ts          = require('gulp-typescript');
 
-var tsProject = ts.createProject('tsconfig.json');
-
 gulp.task('default', ['copy', 'less', 'ts']);
 
 gulp.task('clean', function(){
-  return del(['dist/**/*', '!dist/css/**', '!dist/js/**', '!dist/main.js']);
+  return del(['dist/**/*', '!dist/css/**', '!dist/js/**', '!dist/main.js', '!dist/core.js']);
 });
 
 gulp.task('copy', ['clean'], function () {
@@ -39,16 +37,22 @@ gulp.task('less', ['css-clean'], function () {
 });
 
 gulp.task('ts-clean', function() {
-  return del(['dist/js/**/*', 'dist/main.js']);
+  del(['dist/js/**/*', 'dist/main.js', 'dist/core.js']);
 });
 
 gulp.task('ts', ['ts-clean'], function(){
-  return gulp.src(['ts/**/*.ts', 'main.ts'])
-    .pipe(ts(tsProject))
+  var main = ts.createProject('tsconfig.json', { outFile: "main.js" }); 
+  gulp.src(['main.ts'])
+    .pipe(ts(main))
+    .pipe(gulp.dest('dist'));
+
+  var core = ts.createProject('tsconfig.json');
+  gulp.src(['ts/**/*.ts*'])
+    .pipe(ts(core))
     .pipe(gulp.dest('dist'));
 });
 
 gulp.task('watch', function() {
-  gulp.watch(['ts/**/*.ts', 'main.ts'], ['ts']);
+  gulp.watch(['ts/**/*.ts*', 'main.ts'], ['ts']);
   gulp.watch(['less/**/*.less'], ['less']);
 });
