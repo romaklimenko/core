@@ -2,9 +2,11 @@
 var path        = require('path');
 
 // node_modules
+var babel       = require('gulp-babel');
 var del         = require('del');
 var gulp        = require('gulp');
 var less        = require('gulp-less');
+var sourcemaps  = require('gulp-sourcemaps');
 var ts          = require('gulp-typescript');
 
 gulp.task('default', ['copy', 'less', 'ts']);
@@ -43,12 +45,18 @@ gulp.task('ts-clean', function() {
 gulp.task('ts', ['ts-clean'], function(){
   var main = ts.createProject('tsconfig.json', { outFile: "main.js" }); 
   gulp.src(['main.ts'])
+    .pipe(sourcemaps.init())
     .pipe(ts(main))
+    .pipe(babel())
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('dist'));
 
   var core = ts.createProject('tsconfig.json');
   gulp.src(['ts/**/*.ts*'])
+    .pipe(sourcemaps.init())
     .pipe(ts(core))
+    .pipe(babel())
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('dist'));
 });
 
