@@ -3,125 +3,38 @@
 'use strict';
 
 interface ITree {
+  name: string;
+  children: Array<ITree>;
 }
 
-class Tree extends React.Component<ITree, {}> {
+interface ITreeProps {
+  key: string;
+  tree: ITree;
+}
+
+interface ITreeState {
+}
+
+class Tree extends React.Component<ITreeProps, ITreeState> {
   public render() {
-    return <aside className="tree">
+    var tree = this.props.tree;
+
+    if (!tree) {
+      throw Error("Tree is not defined.");
+    }
+
+    if (!tree.children) {
+      tree.children = [];
+    };
+
+    return <ul>
           <img src="img/arrow-expand.svg" alt="" />
-          <span>sitecore</span>
+          <span>{tree.name}</span>
           <ul>
-            <li>
-              <img src="img/arrow-expand.svg" alt="" />
-              <span>Content</span>
-              <ul>
-                <li className="tree-item-selected">
-                  <img src="img/arrow-collapse.svg" alt="" />
-                  <span>Home</span>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <img src="img/arrow-expand.svg" alt="" />
-              <span>Layout</span>
-              <ul>
-                <li>
-                  <img src="img/arrow-expand.svg" alt="" />
-                  <span>Controllers</span>
-                </li>
-                <li>
-                  <img src="img/arrow-expand.svg" alt="" />
-                  <span>Devices</span>
-                </li>
-                <li>
-                  <img src="img/arrow-expand.svg" alt="" />
-                  <span>Layouts</span>
-                </li>
-                <li>
-                  <img src="img/arrow-expand.svg" alt="" />
-                  <span>Models</span>
-                </li>
-                <li>
-                  <img src="img/arrow-expand.svg" alt="" />
-                  <span>Placeholder Settings</span>
-                </li>
-                <li>
-                  <img src="img/arrow-expand.svg" alt="" />
-                  <span>Renderings</span>
-                </li>
-                <li>
-                  <img src="img/arrow-expand.svg" alt="" />
-                  <span>Sublayouts</span>
-                </li>
-                <li>
-                  <img src="img/arrow-expand.svg" alt="" />
-                  <span>Simulators</span>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <img src="img/arrow-expand.svg" alt="" />
-              <span>Media Library</span>
-            </li>
-            <li>
-              <img src="img/arrow-expand.svg" alt="" />
-              <span>Social</span>
-            </li>
-            <li>
-              <img src="img/arrow-expand.svg" alt="" />
-              <span>System</span>
-              <ul>
-                <li>
-                  <img src="img/arrow-expand.svg" alt="" />
-                  <span>Aliases</span>
-                </li>
-                <li>
-                  <img src="img/arrow-expand.svg" alt="" />
-                  <span>App Center Sync</span>
-                </li>
-                <li>
-                  <img src="img/arrow-expand.svg" alt="" />
-                  <span>Dictionary</span>
-                </li>
-                <li>
-                  <img src="img/arrow-expand.svg" alt="" />
-                  <span>Languages</span>
-                </li>
-                <li>
-                  <img src="img/arrow-expand.svg" alt="" />
-                  <span>List Manager</span>
-                </li>
-                <li>
-                  <img src="img/arrow-expand.svg" alt="" />
-                  <span>Marketing Control Center</span>
-                </li>
-                <li>
-                  <img src="img/arrow-expand.svg" alt="" />
-                  <span>Modules</span>
-                </li>
-                <li>
-                  <img src="img/arrow-expand.svg" alt="" />
-                  <span>Proxies</span>
-                </li>
-                <li>
-                  <img src="img/arrow-expand.svg" alt="" />
-                  <span>Publishing targets</span>
-                </li>
-                <li>
-                  <img src="img/arrow-expand.svg" alt="" />
-                  <span>Settings</span>
-                </li>
-                <li>
-                  <img src="img/arrow-expand.svg" alt="" />
-                  <span>Social</span>
-                </li>
-                <li>
-                  <img src="img/arrow-expand.svg" alt="" />
-                  <span>Tasks</span>
-                </li>
-              </ul>
-            </li>
+            {tree.children.map((child: ITree) => {
+              return <Tree key={child.name} {...{tree: child}} />;
+            })}
           </ul>
-        </aside>;
+        </ul>;
   }
 }

@@ -2,10 +2,13 @@
 
 'use strict';
 
-interface IContent {
+interface IContentProps {
 }
 
-class Content extends React.Component<IContent, {}> {
+interface IContentState {
+}
+
+class Content extends React.Component<IContentProps, IContentState> {
   public render() {
     return  <div className="content">
               &nbsp;

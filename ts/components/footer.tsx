@@ -2,11 +2,14 @@
 
 'use strict';
 
-interface IFooter {
+interface IFooterProps {
   database: string;
 }
 
-class Footer extends React.Component<IFooter, {}> {
+interface IFooterState {
+}
+
+class Footer extends React.Component<IFooterProps, IFooterState> {
   public render() {
     return  <footer id="footer">
               <div>{this.props.database}</div>
