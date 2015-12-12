@@ -1,66 +1,62 @@
+'use strict';
+
 // system
-var path        = require('path');
+let path        = require('path');
 
 // node_modules
-var babel       = require('gulp-babel');
-var del         = require('del');
-var gulp        = require('gulp');
-var less        = require('gulp-less');
-var sourcemaps  = require('gulp-sourcemaps');
-var ts          = require('gulp-typescript');
+let babel       = require("gulp-babel");
+let del         = require('del');
+let gulp        = require('gulp');
+let less        = require('gulp-less');
+let exec        = require('child_process').exec;
 
-gulp.task('default', ['copy', 'less', 'ts']);
+let run = (command, callback) => {
+  exec(command, (error, stdout, stderr) => {
+    if (stdout) {
+      console.log(stdout);
+    }
+    if (stderr) {
+      console.log(stderr)
+    };
+    callback(error);
+  });
+};
 
-gulp.task('clean', function(){
-  return del(['dist/**/*', '!dist/css/**', '!dist/js/**', '!dist/main.js', '!dist/core.js']);
+gulp.task('default', ['copy', 'less', 'browserify']);
+
+gulp.task('babel', ['typescript'], () => {
+  return gulp.src(['build/es6/**/*.js'])
+    .pipe(babel())
+    .pipe(gulp.dest("build/js"));
 });
 
-gulp.task('copy', ['clean'], function () {
+gulp.task('browserify', ['babel'], (callback) => {
+  run('browserify build/js/scripts/core.js -o dist/core.js', callback);
+  gulp.src('build/es6/main.js').pipe(gulp.dest('dist'));
+});
+
+gulp.task('clean', () => {
+  return del(['build', 'dist']);
+});
+
+gulp.task('copy', () => {
   return gulp.src([
-      'index.html',
-      'package.json',
-      '*img/**/*',
-      '*lib/**/*',
-      '*typings/**/*'
+    'index.html',
+    'package.json',
+    '*img/**/*',
+    '*lib/**/*'
   ])
   .pipe(gulp.dest('dist'));
 });
 
-gulp.task('css-clean', function() {
-  return del(['dist/css/**/*']);
-});
-
-gulp.task('less', ['css-clean'], function () {
+gulp.task('less', () => {
   return gulp.src('less/**/*.less')
     .pipe(less({
-      paths: [ path.join(__dirname, 'less') ]
+      paths: [ 'less' ]
     }))
     .pipe(gulp.dest('dist/css'));
 });
 
-gulp.task('ts-clean', function() {
-  del(['dist/js/**/*', 'dist/main.js', 'dist/core.js']);
-});
-
-gulp.task('ts', ['ts-clean'], function(){
-  var main = ts.createProject('tsconfig.json', { outFile: "main.js" }); 
-  gulp.src(['main.ts'])
-    .pipe(sourcemaps.init())
-    .pipe(ts(main))
-    .pipe(babel())
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest('dist'));
-
-  var core = ts.createProject('tsconfig.json');
-  gulp.src(['ts/**/*.ts*'])
-    .pipe(sourcemaps.init())
-    .pipe(ts(core))
-    .pipe(babel())
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest('dist'));
-});
-
-gulp.task('watch', function() {
-  gulp.watch(['ts/**/*.ts*', 'main.ts'], ['ts']);
-  gulp.watch(['less/**/*.less'], ['less']);
+gulp.task('typescript', (callback) => {
+  run('tsc', callback);
 });

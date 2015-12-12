@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "⚛",
   "devDependencies": {
+    "browserify": "*",
     "babel-polyfill": "*",
     "babel-preset-es2015": "*",
     "del": "*",
@@ -11,12 +12,18 @@
     "gulp-babel": "*",
     "gulp-less": "*",
     "gulp-sourcemaps": "*",
-    "gulp-typescript": "*"
+    "gulp-typescript": "*",
+    "jest-cli": "*",
+    "react": "*",
+    "react-dom": "*",
+    "react-addons-test-utils": "*",
+    "react-test-utils": "*"
   },
   "main": "main.js",
   "scripts": {
+    "preinstall": "npm install -g browserify typescript",
     "start": "electron main.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --config=jest.json"
   },
   "repository": {
     "type": "git",
