@@ -1,14 +1,16 @@
-/// <reference path="../../typings/react/react-global.d.ts" />
-
 'use strict';
 
-interface IContainerProps {
+import { Content } from './content';
+import { ITree, ITreeProps, ITreeState, Tree } from './tree/tree';
+import { Footer } from './footer';
+
+export interface IContainerProps {
 }
 
-interface IContainerState {
+export interface IContainerState {
 }
 
-var tree: ITree = {
+let tree: ITree = {
   name: "sitecore",
   children: [
     {
@@ -121,13 +123,13 @@ var tree: ITree = {
   ]
 };
 
-var treeProps: ITreeProps = {
+let treeProps: ITreeProps = {
   key: tree.name,
   tree: tree
 };
 
-class Container extends React.Component<IContainerProps, IContainerState> {
-  public render() {
+export class Container extends React.Component<IContainerProps, IContainerState> {
+  render() {
     return <div className="flex-container">
       <div className="flex-row">
         <aside className="tree">

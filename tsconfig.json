@@ -1,8 +1,18 @@
 {
   "compilerOptions": {
     "jsx": "react",
-    "target": "ES6",
-    "outFile": "core.js",
-    "removeComments": true
-  }
+    "noResolve": true,
+    "outDir": "build/es6",
+    "target": "ES6"
+  },
+  "exclude": [
+    "build",
+    "dist",
+    "node_modules"
+  ],
+  "filesGlob": [
+    "./**/*.ts",
+    "./typings/**/*.d.ts",
+    "!./node_modules/**/*.ts"
+  ]
 }
