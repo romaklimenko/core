@@ -22,7 +22,7 @@
   "main": "main.js",
   "scripts": {
     "preinstall": "npm install -g browserify typescript",
-    "start": "electron main.js",
+    "start": "electron dist",
     "test": "jest --config=jest.json"
   },
   "repository": {
