@@ -1,6 +1,6 @@
 'use strict';
 
-import { Container } from './components/container'
+import { Container } from './Components/Container'
 
-let containerNode: any = document.getElementById('container');
+const containerNode: any = document.getElementById('container');
 ReactDOM.render(<Container />, containerNode);

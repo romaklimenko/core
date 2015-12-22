@@ -1,8 +1,8 @@
 'use strict';
 
-import { Content } from './content';
-import { ITree, ITreeProps, ITreeState, Tree } from './tree/tree';
-import { Footer } from './footer';
+import { Content } from './Content';
+import { ITree, ITreeProps, ITreeState, Tree } from './Tree/Tree';
+import { Footer } from './Footer';
 
 export interface IContainerProps {
 }
@@ -10,7 +10,7 @@ export interface IContainerProps {
 export interface IContainerState {
 }
 
-let tree: ITree = {
+const tree: ITree = {
   name: "sitecore",
   children: [
     {
@@ -123,7 +123,7 @@ let tree: ITree = {
   ]
 };
 
-let treeProps: ITreeProps = {
+const treeProps: ITreeProps = {
   key: tree.name,
   tree: tree
 };
