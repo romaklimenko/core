@@ -17,7 +17,7 @@ export interface ITreeState {
 
 export class Tree extends React.Component<ITreeProps, ITreeState> {
   render() {
-    let tree = this.props.tree;
+    const tree = this.props.tree;
 
     if (!tree) {
       throw Error("The tree is not defined.");
