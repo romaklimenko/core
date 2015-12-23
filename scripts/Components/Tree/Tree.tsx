@@ -1,6 +1,6 @@
 'use strict';
 
-import * as React from "react";
+import * as React from 'react';
 
 export interface ITree {
   name: string;
