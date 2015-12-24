@@ -43,8 +43,7 @@ gulp.task('copy', () => {
   return gulp.src([
     'index.html',
     'package.json',
-    '*img/**/*',
-    '*lib/**/*'
+    '*img/**/*'
   ])
   .pipe(gulp.dest('dist'));
 });

@@ -2,6 +2,14 @@
   "name": "core",
   "version": "0.0.1",
   "description": "⚛",
+  "dependencies": {
+    "bootstrap": "*",
+    "flux": "*",
+    "react": "*",
+    "react-dom": "*",
+    "react-redux": "*",
+    "redux": "*"
+  },
   "devDependencies": {
     "browserify": "*",
     "babel-polyfill": "*",
@@ -21,7 +29,6 @@
   },
   "main": "main.js",
   "scripts": {
-    "preinstall": "npm install -g browserify typescript",
     "start": "electron dist",
     "test": "jest --config=jest.json"
   },
