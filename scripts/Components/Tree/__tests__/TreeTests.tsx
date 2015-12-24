@@ -23,22 +23,41 @@ const tree: ITree = {
         { name: "[ABA]", children: [] },
         { name: "[ABB]", children: [] }] }] };
 
+const treeProps: ITreeProps = {
+  key: tree.name,
+  tree: tree
+};
+
 describe('Tree', () => {
   describe('render', () => {
     it('renders a tree', () => {
-
-      const treeProps: ITreeProps = {
-        key: tree.name,
-        tree: tree
-      };
-
       const treeComponent = TestUtils.renderIntoDocument(
         <div><Tree key={tree.name} {...treeProps} /></div>
       );
 
-      const treeComponentNode = ReactDOM.findDOMNode(treeComponent).children[0];
+      const A: Element = ReactDOM.findDOMNode(treeComponent).children[0];
+      expect(A.textContent).toBe("[A][AA][AAA][AAB][AB][ABA][ABB]");
 
-      expect(treeComponentNode.textContent).toBe("[A][AA][AAA][AAB][AB][ABA][ABB]");
+      const A_AA: Element = A.querySelector('ul > ul:nth-child(1)');
+      expect(A_AA.textContent).toBe("[AA][AAA][AAB]");
+
+      const A_AA_AAA: Element = A_AA.querySelector('ul > ul:nth-child(1)');
+      expect(A_AA_AAA.textContent).toBe("[AAA]");
+    });
+
+    it('sets appropriate arrow to tree node', () => {
+      const treeComponent = TestUtils.renderIntoDocument(
+        <div><Tree key={tree.name} {...treeProps} /></div>
+      );
+
+      const A: Element = ReactDOM.findDOMNode(treeComponent).children[0];
+      expect(A.querySelector('svg').className).toBe("tree-arrow-expanded");
+
+      const A_AA: Element = A.querySelector('ul > ul:nth-child(1)');
+      expect(A_AA.querySelector('svg').className).toBe("tree-arrow-expanded");
+
+      const A_AA_AAA: Element = A_AA.querySelector('ul > ul:nth-child(1)');
+      expect(A_AA_AAA.querySelector('svg').className).toBe("tree-arrow-collapsed");
     });
   });
 });
