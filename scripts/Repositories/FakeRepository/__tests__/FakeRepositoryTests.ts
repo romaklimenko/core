@@ -1,25 +1,18 @@
 'use strict';
 
-jest.dontMock('fs');
 jest.dontMock('object-assign');
 jest.dontMock('../FakeRepository');
-
-const fs = require('fs');
 
 // TypeScript in current mode doesn't like require.
 import { FakeRepository } from '../FakeRepository';
 
 // Jest doesn't like ES2015 import.
-const _FakeRepository = require('../FakeRepository')
-  .FakeRepository;
+const _FakeRepository = require('../FakeRepository').FakeRepository;
 
 import { IRepository } from '../../IRepository';
 import { IItem } from '../../IItem';
 
-const data: IItem[] = JSON.parse(fs.readFileSync('items.json', 'utf8'));
-
-const fakeRepository: FakeRepository = new _FakeRepository();
-fakeRepository.data = data;
+const fakeRepository: IRepository = new _FakeRepository();
 
 describe('FakeRepository', () => {
   describe('getChildren', () => {
