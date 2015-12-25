@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-import { IItem } from 'IItem';
+import { IItem } from 'IItem'
 
 export interface IRepository {
-  getChildren(id: string): Promise<IItem[]>;
+  getChildren(id: string): Promise<IItem[]>
 }

@@ -1,11 +1,11 @@
-'use strict';
+'use strict'
 
-import { IItem } from '../IItem';
-import { IRepository } from '../IRepository';
+import { IItem } from '../IItem'
+import { IRepository } from '../IRepository'
 
 export class FakeRepository implements IRepository {
 
-  data: IItem[] = data;
+  data: IItem[] = data
 
   getChildren(itemId: string): Promise<IItem[]> {
     return new Promise<IItem[]>(
@@ -13,11 +13,11 @@ export class FakeRepository implements IRepository {
         resolve(
           this.data.filter(
             (value: IItem) => {
-              return value.Parent === itemId;
+              return value.Parent === itemId
             })
-        );
+        )
       }
-    );
+    )
   }
 }
 
@@ -4565,4 +4565,4 @@ const data: IItem[] = [
   { "ID": "A013C933-2185-485E-90D1-FDC421946F3E", "Name": "New template", "Parent": "73BAECEB-744D-4D4A-A7A5-7A935638643F" },
   { "ID": "143C0BE4-B1D8-4A66-8DBC-4CA6F94807BC", "Name": "Data", "Parent": "A013C933-2185-485E-90D1-FDC421946F3E" },
   { "ID": "B04B36E1-23D2-489E-8D13-EEE4EB7CA98A", "Name": "Test", "Parent": "143C0BE4-B1D8-4A66-8DBC-4CA6F94807BC" },
-  { "ID": "318EED72-EF9C-4A19-B65D-8A2E2072A4BB", "Name": "General link", "Parent": "AE76A034-9491-4B83-99F5-39F227D6FB59" } ];
+  { "ID": "318EED72-EF9C-4A19-B65D-8A2E2072A4BB", "Name": "General link", "Parent": "AE76A034-9491-4B83-99F5-39F227D6FB59" } ]
