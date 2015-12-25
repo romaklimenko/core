@@ -22,8 +22,6 @@
     "gulp-sourcemaps": "*",
     "gulp-typescript": "*",
     "jest-cli": "*",
-    "react": "*",
-    "react-dom": "*",
     "react-addons-test-utils": "*",
     "react-test-utils": "*"
   },
