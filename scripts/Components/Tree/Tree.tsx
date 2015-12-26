@@ -4,12 +4,13 @@ import * as React from 'react'
 
 export interface ITree {
   name: string
-  children: Array<ITree>
+  childTrees: Array<ITree>
 }
 
-export interface ITreeProps {
+export interface ITreeProps extends React.Props<Tree> {
   key: string
   tree: ITree
+  onToggleCollapsed?(): void
 }
 
 export interface ITreeState { }
@@ -23,20 +24,21 @@ const TREE_ARROW_EXPANDED = <svg width="16" height="16" className="tree-arrow-ex
                             </svg>
 
 export class Tree extends React.Component<ITreeProps, ITreeState> {
+
+  handleClick(e) {
+    this.props.onToggleCollapsed();
+  }
+
   render() {
     const tree = this.props.tree
 
-    if (!tree) {
-      throw Error("The tree is not defined.")
+    if (!tree.childTrees) {
+      tree.childTrees = []
     }
-
-    if (!tree.children) {
-      tree.children = []
-    };
 
     let arrow
 
-    if (tree.children.length === 0) {
+    if (tree.childTrees.length === 0) {
       arrow = TREE_ARROW_COLLAPSED
     }
     else {
@@ -44,11 +46,13 @@ export class Tree extends React.Component<ITreeProps, ITreeState> {
     }
 
     return  <ul>
-              {arrow}
+              <span onClick={e => this.handleClick(e)}>{arrow}</span>
               <span>{tree.name}</span>
               <ul>
-                {tree.children.map((child: ITree) => {
-                  return <Tree key={child.name} {...{tree: child}} />;
+                {tree.childTrees.map((childTree: ITree) => {
+                  return <Tree key={childTree.name}
+                    onToggleCollapsed={this.props.onToggleCollapsed}
+                    {...{tree: childTree}} />;
                 })}
               </ul>
             </ul>

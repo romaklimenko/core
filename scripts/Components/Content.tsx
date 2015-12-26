@@ -1,10 +1,8 @@
 'use strict'
 
-export interface IContentProps {
-}
+export interface IContentProps extends React.Props<Content> {}
 
-export interface IContentState {
-}
+export interface IContentState { }
 
 export class Content extends React.Component<IContentProps, IContentState> {
   render() {

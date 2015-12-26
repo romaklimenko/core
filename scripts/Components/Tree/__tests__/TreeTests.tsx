@@ -13,19 +13,20 @@ import { ITree, ITreeProps, ITreeState } from '../Tree'
 
 const tree: ITree = {
   name: "[A]",
-  children: [
+  childTrees: [
     { name: "[AA]",
-      children: [
-        { name: "[AAA]", children: [] },
-        { name: "[AAB]", children: [] }] },
+      childTrees: [
+        { name: "[AAA]", childTrees: [] },
+        { name: "[AAB]", childTrees: [] }] },
     { name: "[AB]",
-      children: [
-        { name: "[ABA]", children: [] },
-        { name: "[ABB]", children: [] }] }] }
+      childTrees: [
+        { name: "[ABA]", childTrees: [] },
+        { name: "[ABB]", childTrees: [] }] }] }
 
 const treeProps: ITreeProps = {
   key: tree.name,
-  tree: tree
+  tree: tree,
+  onToggleCollapsed: () => { }
 };
 
 describe('Tree', () => {
