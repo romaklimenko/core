@@ -1,6 +1,6 @@
 'use strict'
 
-import { IItem, IRepository } from '../interfaces'
+import { IItem, IRepository } from '../../interfaces'
 
 export class FakeRepository implements IRepository {
 

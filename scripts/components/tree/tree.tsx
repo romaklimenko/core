@@ -2,12 +2,16 @@
 
 import * as React from 'react'
 
+import { IReduxConnected } from '../interfaces'
+
 export interface ITree {
+  id: string
   name: string
-  childTrees: Array<ITree>
+  path: string
+  children: Array<ITree>
 }
 
-export interface ITreeProps extends React.Props<Tree> {
+export interface ITreeProps extends React.Props<Tree>, IReduxConnected {
   key: string
   tree: ITree
   onToggleCollapsed?(): void
@@ -25,20 +29,18 @@ const TREE_ARROW_EXPANDED = <svg width="16" height="16" className="tree-arrow-ex
 
 export class Tree extends React.Component<ITreeProps, ITreeState> {
 
-  handleClick(e) {
-    this.props.onToggleCollapsed();
+  toggleCollapsed(e) {
+    this.props.dispatch({
+      type: 'TREE_TOGGLE_COLLAPSED',
+      path: this.props.tree.path })
   }
 
   render() {
     const tree = this.props.tree
 
-    if (!tree.childTrees) {
-      tree.childTrees = []
-    }
-
     let arrow
 
-    if (tree.childTrees.length === 0) {
+    if (tree.children.length === 0) {
       arrow = TREE_ARROW_COLLAPSED
     }
     else {
@@ -46,13 +48,12 @@ export class Tree extends React.Component<ITreeProps, ITreeState> {
     }
 
     return  <ul>
-              <span onClick={e => this.handleClick(e)}>{arrow}</span>
+              <span onClick={e => this.toggleCollapsed(e)}>{arrow}</span>
               <span>{tree.name}</span>
               <ul>
-                {tree.childTrees.map((childTree: ITree) => {
-                  return <Tree key={childTree.name}
-                    onToggleCollapsed={this.props.onToggleCollapsed}
-                    {...{tree: childTree}} />;
+                {tree.children.map((childTree: ITree) => {
+                  return <Tree key={childTree.path}
+                    dispatch={this.props.dispatch} {...{tree: childTree}} />;
                 })}
               </ul>
             </ul>

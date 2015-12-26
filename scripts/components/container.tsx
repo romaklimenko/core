@@ -5,8 +5,9 @@ import { ITree, ITreeProps, ITreeState, Tree } from './tree/tree'
 import { Footer } from './footer'
 import { IStore } from '../core'
 
-export interface IContainerProps extends React.Props<Container> {
-  dispatch?: {(object: any): any},
+import { IReduxConnected } from '../interfaces'
+
+export interface IContainerProps extends React.Props<Container>, IReduxConnected {
   tree?: ITree
 }
 
@@ -19,11 +20,7 @@ export class Container extends React.Component<IContainerProps, IContainerState>
     return <div className="flex-container">
       <div className="flex-row">
         <aside className="tree">
-          <Tree key={tree.name}
-            onToggleCollapsed={ () => {
-              dispatch({ type: 'TREE_COLLAPSED_TOGGLE' })
-            }}
-            {...{ tree: tree }} />
+          <Tree key={tree.name} dispatch={dispatch} {...{ tree: tree }} />
         </aside>
         <Content />
       </div>

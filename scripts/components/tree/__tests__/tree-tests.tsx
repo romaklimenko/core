@@ -12,21 +12,23 @@ const Tree = require('../tree').Tree
 import { ITree, ITreeProps, ITreeState } from '../tree'
 
 const tree: ITree = {
+  id: "[A]",
   name: "[A]",
-  childTrees: [
-    { name: "[AA]",
-      childTrees: [
-        { name: "[AAA]", childTrees: [] },
-        { name: "[AAB]", childTrees: [] }] },
-    { name: "[AB]",
-      childTrees: [
-        { name: "[ABA]", childTrees: [] },
-        { name: "[ABB]", childTrees: [] }] }] }
+  path: "[A]",
+  children: [
+    { id: "[AA]", name: "[AA]", path: "[A]/[AA]",
+      children: [
+        { id: "[AAA]", name: "[AAA]", path: "[A]/[AA]/[AAA]", children: [] },
+        { id: "[AAB]", name: "[AAB]", path: "[A]/[AA]/[AAB]", children: [] }] },
+    { id: "[AB]", name: "[AB]", path: "[A]/[AB]",
+      children: [
+        { id: "[ABA]", name: "[ABA]", path: "[A]/[AB]/[ABA]", children: [] },
+        { id: "[ABB]", name: "[ABB]", path: "[A]/[AA]/[ABB]", children: [] }] }] }
 
 const treeProps: ITreeProps = {
   key: tree.name,
   tree: tree,
-  onToggleCollapsed: () => { }
+  dispatch: () => { }
 };
 
 describe('Tree', () => {

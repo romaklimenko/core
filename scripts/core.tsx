@@ -5,57 +5,37 @@ import { connect, Provider } from 'react-redux'
 import { Container } from './components/container'
 import { ITree } from './components/tree/tree'
 
-const tree: ITree = {
-  name: "sitecore",
-  childTrees: [
-    { name: "Content",
-      childTrees: [
-        { name: "Home", childTrees: [] },
-        { name: "Layout", childTrees: [
-          { name: "Controllers", childTrees: [] },
-          { name: "Devices", childTrees: [] },
-          { name: "Layouts", childTrees: [] },
-          { name: "Models", childTrees: [] },
-          { name: "Placeholder Settings", childTrees: [] },
-          { name: "Renderings", childTrees: [] },
-          { name: "Sublayouts", childTrees: [] },
-          { name: "Simulators", childTrees: [] }]
-        },
-        { name: "Media Library", childTrees: [] },
-        { name: "Social", childTrees: [] },
-        { name: "System", childTrees: [
-          { name: "Aliases", childTrees: [] },
-          { name: "App Center Sync", childTrees: [] },
-          { name: "Dictionary", childTrees: [] },
-          { name: "Languages", childTrees: [] },
-          { name: "List Manager", childTrees: [] },
-          { name: "Marketing Control Center", childTrees: [] },
-          { name: "Modules", childTrees: [] },
-          { name: "Proxies", childTrees: [] },
-          { name: "Publishing Targets", childTrees: [] },
-          { name: "Settings", childTrees: [] },
-          { name: "Social", childTrees: [] },
-          { name: "Tasks", childTrees: [] }]
-        }]}]}
-
 export interface IStore {
   tree: ITree
-  count: number
 }
 
 const initialState: IStore = {
-  tree: tree,
-  count: 1
+  tree: {
+    id: "[A]",
+    name: "[A]",
+    path: "[A]",
+    children: [
+      { id: "[AA]", name: "[AA]", path: "[A]/[AA]",
+        children: [
+          { id: "[AAA]", name: "[AAA]", path: "[A]/[AA]/[AAA]", children: [] },
+          { id: "[AAB]", name: "[AAB]", path: "[A]/[AA]/[AAB]", children: [] }] },
+      { id: "[AB]", name: "[AB]", path: "[A]/[AB]",
+        children: [
+          { id: "[ABA]", name: "[ABA]", path: "[A]/[AB]/[ABA]", children: [] },
+          { id: "[ABB]", name: "[ABB]", path: "[A]/[AA]/[ABB]", children: [] }] }] }
 }
 
 const reducer = (state: IStore, action: any) => {
+
+  console.info('action', action)
+
   if (!state) {
     return initialState
   }
 
   switch (action.type) {
-    case 'TREE_COLLAPSED_TOGGLE': 
-      state.tree.name = state.tree.name + ' 1' // TODO: Mutable!
+    case 'TREE_TOGGLE_COLLAPSED': 
+      state.tree.name = action.path // TODO: Mutable!
       return state
     default:
       return state
@@ -65,22 +45,21 @@ const reducer = (state: IStore, action: any) => {
 const store = createStore(reducer)
 
 store.subscribe(() => {
-  console.log(store.getState())
+  console.info('state', store.getState())
   render(store)
 })
 
 const select = (state) => {
   return {
-    count: state.count,
     tree: state.tree
   }
 }
 
-const containerNode: any = document.getElementById('container')
+const containerNode: HTMLElement = document.getElementById('container')
 
 const render = (store) => {
-  const ContainerDecorator = connect(select)(Container)
-  ReactDOM.render(<Provider store={store}><ContainerDecorator /></Provider>, containerNode)
+  const ReduxContainer = connect(select)(Container)
+  ReactDOM.render(<Provider store={store}><ReduxContainer /></Provider>, containerNode)
 }
 
 render(store)
