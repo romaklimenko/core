@@ -1,15 +1,15 @@
 'use strict'
 
 jest.dontMock('object-assign')
-jest.dontMock('../Tree')
+jest.dontMock('../tree')
 
 const React = require('react')
 const ReactDOM = require('react-dom')
 const TestUtils = require('react-addons-test-utils')
 
-const Tree = require('../Tree').Tree
+const Tree = require('../tree').Tree
 
-import { ITree, ITreeProps, ITreeState } from '../Tree'
+import { ITree, ITreeProps, ITreeState } from '../tree'
 
 const tree: ITree = {
   name: "[A]",

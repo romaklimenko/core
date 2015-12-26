@@ -1,9 +1,9 @@
 'use strict'
 
-import { Content } from './Content'
-import { ITree, ITreeProps, ITreeState, Tree } from './Tree/Tree'
-import { Footer } from './Footer'
-import { IStore } from '../Core'
+import { Content } from './content'
+import { ITree, ITreeProps, ITreeState, Tree } from './tree/tree'
+import { Footer } from './footer'
+import { IStore } from '../core'
 
 export interface IContainerProps extends React.Props<Container> {
   dispatch?: {(object: any): any},

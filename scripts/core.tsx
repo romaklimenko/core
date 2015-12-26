@@ -2,8 +2,8 @@
 
 import { createStore } from 'redux'
 import { connect, Provider } from 'react-redux'
-import { Container } from './Components/Container'
-import { ITree } from './Components/Tree/Tree'
+import { Container } from './components/container'
+import { ITree } from './components/tree/tree'
 
 const tree: ITree = {
   name: "sitecore",
