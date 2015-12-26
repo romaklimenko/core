@@ -4,7 +4,7 @@
   "description": "⚛",
   "dependencies": {
     "bootstrap": "*",
-    "flux": "*",
+    "immutable": "*",
     "react": "*",
     "react-dom": "*",
     "react-redux": "*",

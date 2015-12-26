@@ -3,6 +3,7 @@
 jest.dontMock('object-assign')
 jest.dontMock('../tree')
 
+const Immutable = require('immutable')
 const React = require('react')
 const ReactDOM = require('react-dom')
 const TestUtils = require('react-addons-test-utils')
@@ -11,7 +12,7 @@ const Tree = require('../tree').Tree
 
 import { ITree, ITreeProps, ITreeState } from '../tree'
 
-const tree: ITree = {
+const tree: Immutable.Map<string, any> = Immutable.fromJS({
   id: "[A]",
   name: "[A]",
   path: "[A]",
@@ -23,19 +24,16 @@ const tree: ITree = {
     { id: "[AB]", name: "[AB]", path: "[A]/[AB]",
       children: [
         { id: "[ABA]", name: "[ABA]", path: "[A]/[AB]/[ABA]", children: [] },
-        { id: "[ABB]", name: "[ABB]", path: "[A]/[AA]/[ABB]", children: [] }] }] }
-
-const treeProps: ITreeProps = {
-  key: tree.name,
-  tree: tree,
-  dispatch: () => { }
-};
+        { id: "[ABB]", name: "[ABB]", path: "[A]/[AA]/[ABB]", children: [] }] }] })
 
 describe('Tree', () => {
   describe('render', () => {
     it('renders a tree', () => {
       const treeComponent = TestUtils.renderIntoDocument(
-        <div><Tree key={tree.name} {...treeProps} /></div>
+        <div>
+          <Tree key={tree.get('path')}
+            dispatch={() => { console.info('dispatch') }} {...{ tree: tree }} />
+        </div>
       );
 
       const A: Element = ReactDOM.findDOMNode(treeComponent).children[0]
@@ -50,7 +48,10 @@ describe('Tree', () => {
 
     it('sets appropriate arrow to tree node', () => {
       const treeComponent = TestUtils.renderIntoDocument(
-        <div><Tree key={tree.name} {...treeProps} /></div>
+        <div>
+          <Tree key={tree.get('path')}
+            dispatch={() => { console.info('dispatch') }} {...{ tree: tree }} />
+        </div>
       )
 
       const A: Element = ReactDOM.findDOMNode(treeComponent).children[0]

@@ -1,5 +1,6 @@
 'use strict'
 
+import * as Immutable from 'immutable'
 import { createStore } from 'redux'
 import { connect, Provider } from 'react-redux'
 import { Container } from './components/container'
@@ -9,7 +10,7 @@ export interface IStore {
   tree: ITree
 }
 
-const initialState: IStore = {
+const initialState: Immutable.Map<string, any> = Immutable.fromJS({
   tree: {
     id: "[A]",
     name: "[A]",
@@ -22,10 +23,9 @@ const initialState: IStore = {
       { id: "[AB]", name: "[AB]", path: "[A]/[AB]",
         children: [
           { id: "[ABA]", name: "[ABA]", path: "[A]/[AB]/[ABA]", children: [] },
-          { id: "[ABB]", name: "[ABB]", path: "[A]/[AA]/[ABB]", children: [] }] }] }
-}
+          { id: "[ABB]", name: "[ABB]", path: "[A]/[AA]/[ABB]", children: [] }] }] } })
 
-const reducer = (state: IStore, action: any) => {
+const reducer = (state: Immutable.Map<string, any>, action: any) => {
 
   console.info('action', action)
 
@@ -34,9 +34,8 @@ const reducer = (state: IStore, action: any) => {
   }
 
   switch (action.type) {
-    case 'TREE_TOGGLE_COLLAPSED': 
-      state.tree.name = action.path // TODO: Mutable!
-      return state
+    case 'TREE_TOGGLE_COLLAPSED':
+      return state.setIn(["tree", "name"], action.path)
     default:
       return state
   }
@@ -51,7 +50,7 @@ store.subscribe(() => {
 
 const select = (state) => {
   return {
-    tree: state.tree
+    tree: state.get("tree")
   }
 }
 

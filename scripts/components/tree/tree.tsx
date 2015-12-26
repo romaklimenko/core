@@ -1,7 +1,7 @@
 'use strict'
 
 import * as React from 'react'
-
+import * as Immutable from 'immutable'
 import { IReduxConnected } from '../interfaces'
 
 export interface ITree {
@@ -13,8 +13,7 @@ export interface ITree {
 
 export interface ITreeProps extends React.Props<Tree>, IReduxConnected {
   key: string
-  tree: ITree
-  onToggleCollapsed?(): void
+  tree: Immutable.Map<string, any>
 }
 
 export interface ITreeState { }
@@ -32,15 +31,15 @@ export class Tree extends React.Component<ITreeProps, ITreeState> {
   toggleCollapsed(e) {
     this.props.dispatch({
       type: 'TREE_TOGGLE_COLLAPSED',
-      path: this.props.tree.path })
+      path: this.props.tree.get('path') })
   }
 
   render() {
-    const tree = this.props.tree
+    const tree: Immutable.Map<string, any> = this.props.tree
 
     let arrow
 
-    if (tree.children.length === 0) {
+    if (tree.get('children').size === 0) {
       arrow = TREE_ARROW_COLLAPSED
     }
     else {
@@ -49,10 +48,10 @@ export class Tree extends React.Component<ITreeProps, ITreeState> {
 
     return  <ul>
               <span onClick={e => this.toggleCollapsed(e)}>{arrow}</span>
-              <span>{tree.name}</span>
+              <span>{tree.get('name')}</span>
               <ul>
-                {tree.children.map((childTree: ITree) => {
-                  return <Tree key={childTree.path}
+                {tree.get('children').map((childTree: Immutable.Map<string, any>) => {
+                  return <Tree key={childTree.get('path')}
                     dispatch={this.props.dispatch} {...{tree: childTree}} />;
                 })}
               </ul>
