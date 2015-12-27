@@ -12,18 +12,20 @@ export interface IStore {
 
 const initialState: Immutable.Map<string, any> = Immutable.fromJS({
   tree: {
-    id: "[A]",
-    name: "[A]",
-    path: "[A]",
+    id: '[A]',
+    name: '[A]',
+    path: '[A]',
     children: [
-      { id: "[AA]", name: "[AA]", path: "[A]/[AA]",
+      { id: '[AA]', name: '[AA]', path: '[A]/[AA]',
         children: [
-          { id: "[AAA]", name: "[AAA]", path: "[A]/[AA]/[AAA]", children: [] },
-          { id: "[AAB]", name: "[AAB]", path: "[A]/[AA]/[AAB]", children: [] }] },
-      { id: "[AB]", name: "[AB]", path: "[A]/[AB]",
+          { id: '[AAA]', name: '[AAA]', path: '[A]/[AA]/[AAA]', children: [] },
+          { id: '[AAB]', name: '[AAB]', path: '[A]/[AA]/[AAB]', children: [] }] },
+      { id: '[AB]', name: '[AB]', path: '[A]/[AB]',
         children: [
-          { id: "[ABA]", name: "[ABA]", path: "[A]/[AB]/[ABA]", children: [] },
-          { id: "[ABB]", name: "[ABB]", path: "[A]/[AA]/[ABB]", children: [] }] }] } })
+          { id: '[ABA]', name: '[ABA]', path: '[A]/[AB]/[ABA]', children: [] },
+          { id: '[ABB]', name: '[ABB]', path: '[A]/[AB]/[ABB]', children: [] }] }] } })
+
+window["state"] = initialState
 
 const reducer = (state: Immutable.Map<string, any>, action: any) => {
 
@@ -35,7 +37,19 @@ const reducer = (state: Immutable.Map<string, any>, action: any) => {
 
   switch (action.type) {
     case 'TREE_TOGGLE_COLLAPSED':
-      return state.setIn(["tree", "name"], action.path)
+      const splittedPath = action.path.split('/')
+      const tree = state.get('tree').toJS()
+
+      const pathReducer = (tree: ITree, id: string, index: number, array: string[]) => {
+        const child: ITree = tree.children.filter((x: ITree) => x.id === id)[0]
+        return child
+      }
+
+      const child = splittedPath.reduce(pathReducer, { children: [tree] })
+
+      if (child.path === action.path) child.children = []
+
+      return state.set('tree', Immutable.fromJS(tree))
     default:
       return state
   }
@@ -50,7 +64,7 @@ store.subscribe(() => {
 
 const select = (state) => {
   return {
-    tree: state.get("tree")
+    tree: state.get('tree')
   }
 }
 
