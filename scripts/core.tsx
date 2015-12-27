@@ -4,7 +4,7 @@ import * as Immutable from 'immutable'
 import { createStore } from 'redux'
 import { connect, Provider } from 'react-redux'
 import { Container } from './components/container'
-import { ITree } from './components/tree/tree'
+import { ITree, TREE_TOGGLE_COLLAPSED } from './components/tree/tree'
 
 export interface IStore {
   tree: ITree
@@ -36,7 +36,7 @@ const reducer = (state: Immutable.Map<string, any>, action: any) => {
   }
 
   switch (action.type) {
-    case 'TREE_TOGGLE_COLLAPSED':
+    case TREE_TOGGLE_COLLAPSED:
       const splittedPath = action.path.split('/')
       const tree = state.get('tree').toJS()
 
@@ -60,18 +60,17 @@ const store = createStore(reducer)
 store.subscribe(() => {
   console.info('state', store.getState())
   render(store)
-})
-
-const select = (state) => {
-  return {
-    tree: state.get('tree')
-  }
-}
+}) 
 
 const containerNode: HTMLElement = document.getElementById('container')
 
 const render = (store) => {
-  const ReduxContainer = connect(select)(Container)
+  const ReduxContainer = connect((state) => {
+    return {
+      tree: state.get('tree')
+    }
+  })(Container)
+
   ReactDOM.render(<Provider store={store}><ReduxContainer /></Provider>, containerNode)
 }
 
