@@ -4,28 +4,27 @@ import * as Immutable from 'immutable'
 import { createStore } from 'redux'
 import { connect, Provider } from 'react-redux'
 import { Container } from './components/container'
-import { ITree, TREE_TOGGLE_COLLAPSED } from './components/tree/tree'
+import {
+  ITree,
+  TREE_FETCH_REQUEST, TREE_FETCH_RESPONSE, TREE_FETCH_FAILURE,
+  TREE_TOGGLE_COLLAPSED } from './components/tree/tree'
+import { IItem, IRepository } from 'interfaces'
+import { FakeRepository } from './repositories/fake-repository/fake-repository'
 
 export interface IStore {
   tree: ITree
 }
 
+const repository: IRepository = new FakeRepository
+
 const initialState: Immutable.Map<string, any> = Immutable.fromJS({
   tree: {
-    id: '[A]',
-    name: '[A]',
-    path: '[A]',
-    children: [
-      { id: '[AA]', name: '[AA]', path: '[A]/[AA]',
-        children: [
-          { id: '[AAA]', name: '[AAA]', path: '[A]/[AA]/[AAA]', children: [] },
-          { id: '[AAB]', name: '[AAB]', path: '[A]/[AA]/[AAB]', children: [] }] },
-      { id: '[AB]', name: '[AB]', path: '[A]/[AB]',
-        children: [
-          { id: '[ABA]', name: '[ABA]', path: '[A]/[AB]/[ABA]', children: [] },
-          { id: '[ABB]', name: '[ABB]', path: '[A]/[AB]/[ABB]', children: [] }] }] } })
+    id: '11111111-1111-1111-1111-111111111111',
+    name: 'sitecore',
+    path: '11111111-1111-1111-1111-111111111111',
+    children: [] } })
 
-window["state"] = initialState
+window['state'] = initialState
 
 const reducer = (state: Immutable.Map<string, any>, action: any) => {
 
@@ -50,6 +49,26 @@ const reducer = (state: Immutable.Map<string, any>, action: any) => {
       if (child.path === action.path) child.children = []
 
       return state.set('tree', Immutable.fromJS(tree))
+
+    case TREE_FETCH_REQUEST:
+      console.warn('TODO: change root to loading.')
+      repository.getChildren(action.id)
+        .then((value: IItem[]) => {
+          store.dispatch({ type: TREE_FETCH_RESPONSE, value: value })
+        })
+        .catch((reason: any) => {
+          store.dispatch({ type: TREE_FETCH_FAILURE, reason: reason })
+        })
+      return state
+
+    case TREE_FETCH_RESPONSE:
+      console.warn('TODO: attach response to the tree, change root to loaded.')
+      return state
+
+    case TREE_FETCH_FAILURE:
+      console.error(action.reason)
+      return state
+
     default:
       return state
   }
@@ -60,7 +79,7 @@ const store = createStore(reducer)
 store.subscribe(() => {
   console.info('state', store.getState())
   render(store)
-}) 
+})
 
 const containerNode: HTMLElement = document.getElementById('container')
 
@@ -75,3 +94,8 @@ const render = (store) => {
 }
 
 render(store)
+
+store.dispatch({
+  type: TREE_FETCH_REQUEST,
+  id: '11111111-1111-1111-1111-111111111111'
+})
