@@ -19,10 +19,10 @@ describe('FakeRepository', () => {
       return fakeRepository
         .getChildren('11111111-1111-1111-1111-111111111111')
         .then((items: IItem[]) => {
-          expect(items.length).toBe(6)
+          expect(items.length).toBe(3)
           expect(items.map((item: IItem) => {
             return item.ID
-          })).toContain('EB2E4FFD-2761-4653-B052-26A64D385227')
+          })).toContain('D37E0440-68D0-4CFB-8F26-AC2FC3127307')
         })
     })
   })
