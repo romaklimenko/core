@@ -23,7 +23,8 @@
     "gulp-typescript": "*",
     "jest-cli": "*",
     "react-addons-test-utils": "*",
-    "react-test-utils": "*"
+    "react-test-utils": "*",
+    "redux-thunk": "*"
   },
   "main": "main.js",
   "scripts": {

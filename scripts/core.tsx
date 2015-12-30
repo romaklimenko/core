@@ -1,8 +1,9 @@
 'use strict'
 
 import * as Immutable from 'immutable'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { connect, Provider } from 'react-redux'
+import thunk from 'redux-thunk'
 import { Container } from './components/container'
 import {
   ITree,
@@ -25,6 +26,18 @@ const initialState: Immutable.Map<string, any> = Immutable.fromJS({
     children: [] } })
 
 window['state'] = initialState
+
+const treeFetchRequest = (id: string) => {
+  return dispatch => {
+    return repository.getChildren(id)
+      .then((children: IItem[]) => {
+        store.dispatch({ type: TREE_FETCH_RESPONSE, children })
+      })
+      .catch((reason: any) => {
+        store.dispatch({ type: TREE_FETCH_FAILURE, reason: reason })
+      })
+  }
+}
 
 const reducer = (state: Immutable.Map<string, any>, action: any) => {
 
@@ -52,13 +65,7 @@ const reducer = (state: Immutable.Map<string, any>, action: any) => {
 
     case TREE_FETCH_REQUEST:
       console.warn('TODO: change root to loading.')
-      repository.getChildren(action.id)
-        .then((value: IItem[]) => {
-          store.dispatch({ type: TREE_FETCH_RESPONSE, value: value })
-        })
-        .catch((reason: any) => {
-          store.dispatch({ type: TREE_FETCH_FAILURE, reason: reason })
-        })
+      treeFetchRequest(action.id)
       return state
 
     case TREE_FETCH_RESPONSE:
@@ -74,7 +81,8 @@ const reducer = (state: Immutable.Map<string, any>, action: any) => {
   }
 }
 
-const store = createStore(reducer)
+const createStoreWithMiddleware = applyMiddleware(thunk) (createStore)
+const store = createStoreWithMiddleware(reducer)
 
 store.subscribe(() => {
   console.info('state', store.getState())
@@ -95,7 +103,4 @@ const render = (store) => {
 
 render(store)
 
-store.dispatch({
-  type: TREE_FETCH_REQUEST,
-  id: '11111111-1111-1111-1111-111111111111'
-})
+store.dispatch(treeFetchRequest('11111111-1111-1111-1111-111111111111'))
