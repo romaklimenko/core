@@ -27,15 +27,40 @@ const initialState: Immutable.Map<string, any> = Immutable.fromJS({
 
 window['state'] = initialState
 
+// TREE_TOGGLE_COLLAPSED
+const treeToggleCollapsed = (path: string) => {
+  return {
+    type: TREE_TOGGLE_COLLAPSED,
+    path
+  }
+}
+
+// TREE_FETCH_REQUEST
 const treeFetchRequest = (id: string) => {
   return dispatch => {
     return repository.getChildren(id)
       .then((children: IItem[]) => {
-        store.dispatch({ type: TREE_FETCH_RESPONSE, children })
+        store.dispatch(treeFetchResponse(children))
       })
       .catch((reason: any) => {
-        store.dispatch({ type: TREE_FETCH_FAILURE, reason: reason })
+        store.dispatch(treeFetchFailure(reason))
       })
+  }
+}
+
+// TREE_FETCH_RESPONSE
+const treeFetchResponse = (children: IItem[]) => {
+  return {
+    type: TREE_FETCH_RESPONSE,
+    children
+  }
+}
+
+// TREE_FETCH_FAILURE
+const treeFetchFailure = (reason: any) => {
+  return {
+    type: TREE_FETCH_FAILURE,
+    reason
   }
 }
 
