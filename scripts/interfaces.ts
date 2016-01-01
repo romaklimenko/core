@@ -1,4 +1,4 @@
-'use strict'
+import * as TreeInterfaces from './components/tree/tree-interfaces'
 
 export interface IItem {
   ID: string
@@ -12,4 +12,8 @@ export interface IRepository {
 
 export interface IReduxConnected {
   dispatch?: {(object: any): any}
+}
+
+export interface IStore {
+  tree: TreeInterfaces.ITree
 }

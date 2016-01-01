@@ -1,13 +1,10 @@
-'use strict'
-
 import * as Immutable from 'immutable'
 import { Content } from './content'
-import { ITree, ITreeProps, ITreeState, Tree } from './tree/tree'
+import { Tree } from './tree/tree'
 import { Footer } from './footer'
-import { IStore } from '../core'
-import { IReduxConnected } from '../interfaces'
+import * as Interfaces from '../interfaces'
 
-export interface IContainerProps extends React.Props<Container>, IReduxConnected {
+export interface IContainerProps extends React.Props<Container>, Interfaces.IReduxConnected {
   tree?: Immutable.Map<string, any>
 }
 

@@ -1,5 +1,3 @@
-'use strict'
-
 jest.dontMock('object-assign')
 jest.dontMock('../fake-repository')
 

@@ -1,5 +1,3 @@
-'use strict'
-
 jest.dontMock('object-assign')
 jest.dontMock('../tree')
 
@@ -10,7 +8,7 @@ const TestUtils = require('react-addons-test-utils')
 
 const Tree = require('../tree').Tree
 
-import { ITree, ITreeProps, ITreeState } from '../tree'
+import * as TreeInterfaces from '../tree-interfaces'
 
 const tree: Immutable.Map<string, any> = Immutable.fromJS({
   id: "[A]",

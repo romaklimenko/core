@@ -1,5 +1,3 @@
-'use strict'
-
 export interface IFooterProps extends React.Props<Footer> {
   database: string
 }

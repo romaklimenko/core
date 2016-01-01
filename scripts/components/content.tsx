@@ -1,5 +1,3 @@
-'use strict'
-
 export interface IContentProps extends React.Props<Content> {}
 
 export interface IContentState { }

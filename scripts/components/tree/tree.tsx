@@ -1,59 +1,40 @@
-'use strict'
-
 import * as React from 'react'
 import * as Immutable from 'immutable'
-import { IReduxConnected } from '../interfaces'
 
-export interface ITree {
-  id: string
-  name: string
-  path: string
-  children: Array<ITree>
-}
+import * as TreeActions from './tree-actions'
+import * as TreeConstants from './tree-constants'
+import * as TreeInterfaces from './tree-interfaces'
 
-export interface ITreeProps extends React.Props<Tree>, IReduxConnected {
-  key: string
-  tree: Immutable.Map<string, any>
-}
+const TREE_ARROW_COLLAPSED = <svg width="16" height="16" className="tree-arrow-collapsed">
+  <path fill="#646465" d="M6 4v8l4-4-4-4zm1 2.414l1.586 1.586-1.586 1.586v-3.172z" />
+</svg>
 
-export interface ITreeState { }
+const TREE_ARROW_EXPANDED =  <svg width="16" height="16" className="tree-arrow-expanded">
+  <path fill="#646465" d="M11 10.07h-5.656l5.656-5.656v5.656z" />
+</svg>
 
-export const TREE_ARROW_COLLAPSED = <svg width="16" height="16" className="tree-arrow-collapsed">
-                              <path fill="#646465" d="M6 4v8l4-4-4-4zm1 2.414l1.586 1.586-1.586 1.586v-3.172z" />
-                             </svg>
+export class Tree extends React.Component<TreeInterfaces.ITreeProps, TreeInterfaces.ITreeState> {
 
-export const TREE_ARROW_EXPANDED = <svg width="16" height="16" className="tree-arrow-expanded">
-                              <path fill="#646465" d="M11 10.07h-5.656l5.656-5.656v5.656z" />
-                            </svg>
+  getArrow(children: Immutable.List<Immutable.Map<string, any>>) {
+    if (children.size === 0) {
+      return TREE_ARROW_COLLAPSED
+    }
+    else {
+      return TREE_ARROW_EXPANDED
+    }
+  }
 
-export const TREE_FETCH_REQUEST   = 'TREE_FETCH_REQUEST'
-export const TREE_FETCH_RESPONSE  = 'TREE_FETCH_RESPONSE'
-export const TREE_FETCH_FAILURE   = 'TREE_FETCH_FAILURE'
-
-export const TREE_TOGGLE_COLLAPSED = 'TREE_TOGGLE_COLLAPSED'
-
-export class Tree extends React.Component<ITreeProps, ITreeState> {
-
-  toggleCollapsed(e) {
-    this.props.dispatch({
-      type: TREE_TOGGLE_COLLAPSED,
-      path: this.props.tree.get('path') })
+  onToggleCollapsed(e) {
+    this.props.dispatch(TreeActions.toggleCollapsed(this.props.tree.get('path')))
   }
 
   render() {
     const tree: Immutable.Map<string, any> = this.props.tree
 
-    let arrow
-
-    if (tree.get('children').size === 0) {
-      arrow = TREE_ARROW_COLLAPSED
-    }
-    else {
-      arrow = TREE_ARROW_EXPANDED
-    }
-
     return  <ul>
-              <span onClick={e => this.toggleCollapsed(e)}>{arrow}</span>
+              <span onClick={e => this.onToggleCollapsed(e)}>
+                {this.getArrow(tree.get('children'))}
+              </span>
               <span>{tree.get('name')}</span>
               <ul>
                 {tree.get('children').map((childTree: Immutable.Map<string, any>) => {
