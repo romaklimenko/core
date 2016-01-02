@@ -5,14 +5,21 @@ import * as TreeInterfaces from './tree-interfaces'
 
 const repository: Interfaces.IRepository = new FakeRepository
 
-export const toggleCollapsed = (path: string) => {
+export const collapse = (tree: Immutable.Map<string, any>) => {
   return {
-    type: TreeConstants.TREE_TOGGLE_COLLAPSED,
-    path
+    type: TreeConstants.TREE_COLLAPSE,
+    tree
   }
 }
 
-export const fetchRequest = (id: string) => { 
+export const expand = (tree: Immutable.Map<string, any>) => {
+  return {
+    type: TreeConstants.TREE_EXPAND,
+    tree
+  }
+}
+
+export const fetchRequest = (id: string) => {
   return dispatch => {
     dispatch({ type: TreeConstants.TREE_FETCH_REQUEST, id })
     return repository.getChildren(id)

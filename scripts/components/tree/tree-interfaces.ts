@@ -6,6 +6,7 @@ export interface ITree {
   name: string
   path: string
   children: Array<ITree>
+  loading?: boolean
 }
 
 export interface ITreeProps extends React.Props<Tree>, Interfaces.IReduxConnected {

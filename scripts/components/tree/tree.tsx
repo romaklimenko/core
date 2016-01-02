@@ -1,39 +1,43 @@
 import * as React from 'react'
 import * as Immutable from 'immutable'
-
 import * as TreeActions from './tree-actions'
 import * as TreeConstants from './tree-constants'
 import * as TreeInterfaces from './tree-interfaces'
 
-const TREE_ARROW_COLLAPSED = <svg width="16" height="16" className="tree-arrow-collapsed">
-  <path fill="#646465" d="M6 4v8l4-4-4-4zm1 2.414l1.586 1.586-1.586 1.586v-3.172z" />
-</svg>
+const getArrow = (tree: Immutable.Map<string, any>) => {
+  if (tree.get('loading')) {
+    return 'img/loading.svg'
+  }
 
-const TREE_ARROW_EXPANDED =  <svg width="16" height="16" className="tree-arrow-expanded">
-  <path fill="#646465" d="M11 10.07h-5.656l5.656-5.656v5.656z" />
-</svg>
+  if (getChildren(tree).size === 0) {
+    return 'img/arrow-collapse.svg'
+  }
+  else {
+    return 'img/arrow-expand.svg'
+  }
+}
+
+const getChildren = (tree: Immutable.Map<string, any>): Immutable.List<Map<string, any>> => { 
+  return tree.get('children')
+}
 
 export class Tree extends React.Component<TreeInterfaces.ITreeProps, TreeInterfaces.ITreeState> {
 
-  getArrow(children: Immutable.List<Immutable.Map<string, any>>) {
-    if (children.size === 0) {
-      return TREE_ARROW_COLLAPSED
+  toggle(e) {
+    if (getChildren(this.props.tree).size !== 0) {
+      this.props.dispatch(TreeActions.collapse(this.props.tree))
     }
     else {
-      return TREE_ARROW_EXPANDED
+      this.props.dispatch(TreeActions.expand(this.props.tree))
     }
-  }
-
-  onToggleCollapsed(e) {
-    this.props.dispatch(TreeActions.toggleCollapsed(this.props.tree.get('path')))
   }
 
   render() {
     const tree: Immutable.Map<string, any> = this.props.tree
 
     return  <ul>
-              <span onClick={e => this.onToggleCollapsed(e)}>
-                {this.getArrow(tree.get('children'))}
+              <span onClick={e => this.toggle(e)}>
+                <img src={getArrow(tree)} />
               </span>
               <span>{tree.get('name')}</span>
               <ul>

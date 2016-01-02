@@ -52,14 +52,17 @@ describe('Tree', () => {
         </div>
       )
 
+      const collapsed = 'img/arrow-collapse.svg'
+      const expanded = 'img/arrow-expand.svg'
+
       const A: Element = ReactDOM.findDOMNode(treeComponent).children[0]
-      expect(A.querySelector('svg').className).toBe("tree-arrow-expanded")
+      expect(A.querySelector('img')['src']).toBe(expanded)
 
       const A_AA: Element = A.querySelector('ul > ul:nth-child(1)')
-      expect(A_AA.querySelector('svg').className).toBe("tree-arrow-expanded")
+      expect(A_AA.querySelector('img')['src']).toBe(expanded)
 
       const A_AA_AAA: Element = A_AA.querySelector('ul > ul:nth-child(1)')
-      expect(A_AA_AAA.querySelector('svg').className).toBe("tree-arrow-collapsed")
+      expect(A_AA_AAA.querySelector('img')['src']).toBe(collapsed)
     })
   })
 })
