@@ -10,7 +10,11 @@ const pathReducer = (tree: TreeInterfaces.ITree, id: string, index: number, arra
 
 const findNode = (path: string, tree: TreeInterfaces.ITree): TreeInterfaces.ITree => {
   const initialValue: TreeInterfaces.ITree = { id: '', path: '', name: '', children: [tree] }
-  return path.split('/').reduce(pathReducer, initialValue)
+  const node: TreeInterfaces.ITree = path.split('/').reduce(pathReducer, initialValue)
+  if (node.path === path) {
+    return node
+  }
+  return undefined
 }
 
 export const TreeReducer = (state: Immutable.Map<string, any> = InitialState, action: any) => {
@@ -23,36 +27,32 @@ export const TreeReducer = (state: Immutable.Map<string, any> = InitialState, ac
 
   switch (action.type) {
     case TreeConstants.TREE_COLLAPSE:
-      if (node.path === action.tree.get('path') && node.children.length > 0) {
+      if (node.children.length > 0) {
         node.children = []
         return state.set('tree', Immutable.fromJS(tree))
       }
-      else {
-        return state
-      }
+      return state
 
     case TreeConstants.TREE_EXPAND:
-      if (node.path === action.tree.get('path')) node.loading = true
+      node.loading = true
       return state.set('tree', Immutable.fromJS(tree))
+      
+    case TreeConstants.TREE_SELECT:
+      return state.set('currentId', node.id)
 
     case TreeConstants.TREE_FETCH_RESPONSE:
-      if (node.path === action.tree.get('path')) {
-        delete node.loading
+      delete node.loading
 
-        action.children.map((child) => {
-          node.children.push({
-            id: child.ID,
-            name: child.Name,
-            path: node.path + '/' + child.ID,
-            children: []
-          })
+      action.children.map((child) => {
+        node.children.push({
+          id: child.ID,
+          name: child.Name,
+          path: node.path + '/' + child.ID,
+          children: []
         })
+      })
 
-        return state.set('tree', Immutable.fromJS(tree))
-      }
-      else {
-        return state
-      }
+      return state.set('tree', Immutable.fromJS(tree))
 
     case TreeConstants.TREE_FETCH_FAILURE:
       console.error(action.reason)

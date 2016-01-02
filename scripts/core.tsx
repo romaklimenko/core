@@ -7,8 +7,6 @@ import * as TreeActions from './components/tree/tree-actions'
 import * as TreeReducers from './components/tree/tree-reducers'
 import { InitialState } from './initial-state'
 
-window['_state'] = InitialState
-
 const createStoreWithMiddleware = applyMiddleware(thunk) (createStore)
 const store = createStoreWithMiddleware(TreeReducers.TreeReducer)
 
@@ -22,6 +20,7 @@ const containerNode: HTMLElement = document.getElementById('container')
 const render = (store) => {
   const ReduxContainer = connect((state) => {
     return {
+      currentId: state.get('currentId'),
       tree: state.get('tree')
     }
   })(Container)

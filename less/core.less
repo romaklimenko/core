@@ -6,9 +6,12 @@
 @sc-red:    rgb(220, 41, 30);
 @sc-black:  rgb(17, 28, 36);
 
-@vsc-blue:       rgb(0, 114, 197);
-@vsc-light-gray: rgb(243, 243, 243);
-@vsc-dark-gray:  rgb(108, 108, 108);
+@vsc-blue:              rgb(0, 114, 197);
+@vsc-light-blue:        rgb(51,153,255);
+@vsc-light-blue-accent: rgb(60,162,255);
+@vsc-light-gray:        rgb(243, 243, 243);
+@vsc-light-gray-accent: rgb(234, 234, 234);
+@vsc-dark-gray:         rgb(108, 108, 108);
 
 html, body, #container {
   height: 100%;
@@ -52,14 +55,28 @@ html, body, #container {
 }
 
 .tree ul {
-  cursor: pointer;
   list-style: none;
   padding-left: 12px;
   white-space: nowrap;
 }
 
-.tree span {
+.tree ul div {
   cursor: pointer;
+}
+
+.tree ul div:hover {
+  color: @sc-black;
+  background-color: @vsc-light-gray-accent;
+}
+
+.tree-selected {
+  background-color: @vsc-light-blue;
+  color: white;
+}
+
+.tree-selected:hover {
+  background-color: @vsc-light-blue-accent !important;
+  color: white !important;
 }
 
 .content {

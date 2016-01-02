@@ -11,9 +11,6 @@ export interface IRepository {
 }
 
 export interface IReduxConnected {
+  currentId?: string
   dispatch?: {(object: any): any}
-}
-
-export interface IStore {
-  tree: TreeInterfaces.ITree
 }

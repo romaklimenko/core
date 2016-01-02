@@ -11,6 +11,13 @@ export const collapse = (tree: Immutable.Map<string, any>) => {
   }
 }
 
+export const select = (tree: Immutable.Map<string, any>) => {
+  return {
+    type: TreeConstants.TREE_SELECT,
+    tree
+  }
+}
+
 export const expand = (tree: Immutable.Map<string, any>) => {
   return dispatch => {
     dispatch({ type: TreeConstants.TREE_EXPAND, tree })
