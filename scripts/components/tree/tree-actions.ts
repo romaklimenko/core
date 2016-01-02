@@ -1,7 +1,6 @@
 import * as Interfaces from '../../interfaces'
 import { FakeRepository } from '../../repositories/fake-repository/fake-repository'
 import * as TreeConstants from './tree-constants'
-import * as TreeInterfaces from './tree-interfaces'
 
 const repository: Interfaces.IRepository = new FakeRepository
 
@@ -13,18 +12,11 @@ export const collapse = (tree: Immutable.Map<string, any>) => {
 }
 
 export const expand = (tree: Immutable.Map<string, any>) => {
-  return {
-    type: TreeConstants.TREE_EXPAND,
-    tree
-  }
-}
-
-export const fetchRequest = (id: string) => {
   return dispatch => {
-    dispatch({ type: TreeConstants.TREE_FETCH_REQUEST, id })
-    return repository.getChildren(id)
+    dispatch({ type: TreeConstants.TREE_EXPAND, tree })
+    return repository.getChildren(tree.get('id'))
       .then((children: Interfaces.IItem[]) => {
-        dispatch(fetchResponse(children))
+        dispatch(fetchResponse(tree, children))
       })
       .catch((reason: any) => {
         dispatch(fetchFailure(reason))
@@ -32,9 +24,10 @@ export const fetchRequest = (id: string) => {
   }
 }
 
-export const fetchResponse = (children: Interfaces.IItem[]) => {
+export const fetchResponse = (tree: Immutable.Map<string, any>, children: Interfaces.IItem[]) => {
   return {
     type: TreeConstants.TREE_FETCH_RESPONSE,
+    tree,
     children
   }
 }

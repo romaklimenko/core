@@ -1,7 +1,6 @@
 import * as React from 'react'
 import * as Immutable from 'immutable'
 import * as TreeActions from './tree-actions'
-import * as TreeConstants from './tree-constants'
 import * as TreeInterfaces from './tree-interfaces'
 
 const getArrow = (tree: Immutable.Map<string, any>) => {
@@ -24,6 +23,7 @@ const getChildren = (tree: Immutable.Map<string, any>): Immutable.List<Map<strin
 export class Tree extends React.Component<TreeInterfaces.ITreeProps, TreeInterfaces.ITreeState> {
 
   toggle(e) {
+    e.stopPropagation()
     if (getChildren(this.props.tree).size !== 0) {
       this.props.dispatch(TreeActions.collapse(this.props.tree))
     }
@@ -35,10 +35,8 @@ export class Tree extends React.Component<TreeInterfaces.ITreeProps, TreeInterfa
   render() {
     const tree: Immutable.Map<string, any> = this.props.tree
 
-    return  <ul>
-              <span onClick={e => this.toggle(e)}>
-                <img src={getArrow(tree)} />
-              </span>
+    return  <ul onClick={e => this.toggle(e)}>
+              <img src={getArrow(tree)} />
               <span>{tree.get('name')}</span>
               <ul>
                 {tree.get('children').map((childTree: Immutable.Map<string, any>) => {

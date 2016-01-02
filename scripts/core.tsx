@@ -31,4 +31,4 @@ const render = (store) => {
 
 render(store)
 
-store.dispatch(TreeActions.fetchRequest('11111111-1111-1111-1111-111111111111'))
+store.dispatch(TreeActions.expand(store.getState().get('tree')))
