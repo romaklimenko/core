@@ -38,22 +38,22 @@ export class Tree extends React.Component<TreeInterfaces.ITreeProps, TreeInterfa
   }
 
   render() {
-    const tree: Immutable.Map<string, any> = this.props.tree
-    const currentTreeNode: Immutable.Map<string, any> = this.props.currentTreeNode
+    const { dispatch, state, tree } = this.props
+    const id: string = tree.get('id')
+    const name: string = tree.get('name')
+    const currentTreeNode: Immutable.Map<string, any> = state.get('currentTreeNode')
 
-    const className = currentTreeNode && currentTreeNode.get('id') === tree.get('id') ?
+    const className = currentTreeNode && currentTreeNode.get('id') === id ?
       'tree-selected' : ''
 
     return  <ul>
               <div onClick={e => this.select(e) } className={className}>
                 <img onClick={e => this.toggle(e)} src={getArrow(tree)} />
-                <span>{tree.get('name')}</span>
+                <span>{name}</span>
               </div>
               <ul>
-                {tree.get('children').map((childTree: Immutable.Map<string, any>) => {
-                  return <Tree key={childTree.get('id')}
-                    dispatch={this.props.dispatch} currentTreeNode={this.props.currentTreeNode}
-                    tree={childTree} />;
+                {tree.get('children').map((child: Immutable.Map<string, any>) => {
+                  return <Tree key={child.get('id')} dispatch={dispatch} state={state} tree={child} />
                 })}
               </ul>
             </ul>

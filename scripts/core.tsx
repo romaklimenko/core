@@ -18,12 +18,7 @@ store.subscribe(() => {
 const containerNode: HTMLElement = document.getElementById('container')
 
 const render = (store) => {
-  const ReduxContainer = connect((state) => {
-    return {
-      currentTreeNode: state.get('currentTreeNode'),
-      tree: state.get('tree')
-    }
-  })(Container)
+  const ReduxContainer = connect((state) => { return { state: state } })(Container)
 
   ReactDOM.render(<Provider store={store}><ReduxContainer /></Provider>, containerNode)
 }

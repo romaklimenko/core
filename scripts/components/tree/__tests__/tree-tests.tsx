@@ -24,16 +24,17 @@ const tree: Immutable.Map<string, any> = Immutable.fromJS({
         { id: "[ABA]", name: "[ABA]", path: "[A]/[AB]/[ABA]", children: [] },
         { id: "[ABB]", name: "[ABB]", path: "[A]/[AA]/[ABB]", children: [] }] }] })
 
+const state: Immutable.Map<string, any> = Immutable.fromJS({ tree: tree })
+const key: string = tree.get('id')
+const dispatch = (action) => console.info('dispatch', action)
+
+const treeComponent = TestUtils.renderIntoDocument(
+  <div><Tree key={key} dispatch={dispatch} state={state} tree={tree} /></div>
+);
+
 describe('Tree', () => {
   describe('render', () => {
     it('renders a tree', () => {
-      const treeComponent = TestUtils.renderIntoDocument(
-        <div>
-          <Tree key={tree.get('path')}
-            dispatch={() => { console.info('dispatch') }} {...{ tree: tree }} />
-        </div>
-      );
-
       const A: Element = ReactDOM.findDOMNode(treeComponent).children[0]
       expect(A.textContent).toBe("[A][AA][AAA][AAB][AB][ABA][ABB]")
 
@@ -45,13 +46,6 @@ describe('Tree', () => {
     })
 
     it('sets appropriate arrow to tree node', () => {
-      const treeComponent = TestUtils.renderIntoDocument(
-        <div>
-          <Tree key={tree.get('path')}
-            dispatch={() => { console.info('dispatch') }} {...{ tree: tree }} />
-        </div>
-      )
-
       const collapsed = 'img/arrow-collapse.svg'
       const expanded = 'img/arrow-expand.svg'
 

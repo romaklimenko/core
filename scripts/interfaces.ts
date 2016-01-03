@@ -12,6 +12,6 @@ export interface IRepository {
 }
 
 export interface IReduxConnected {
-  currentTreeNode?: Immutable.Map<string, any>
   dispatch?: {(object: any): any}
+  state?: any
 }
