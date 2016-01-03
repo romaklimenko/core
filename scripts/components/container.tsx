@@ -18,7 +18,7 @@ export class Container extends React.Component<IContainerProps, IContainerState>
     return <div className="flex-container">
       <div className="flex-row">
         <aside className="tree">
-          <Tree key={tree.get('name')} dispatch={dispatch} currentTreeNode={currentTreeNode} {...{ tree: tree }} />
+          <Tree key={tree.get('name')} dispatch={dispatch} currentTreeNode={currentTreeNode} tree={tree} />
         </aside>
         <Content />
       </div>

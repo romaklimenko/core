@@ -53,7 +53,7 @@ export class Tree extends React.Component<TreeInterfaces.ITreeProps, TreeInterfa
                 {tree.get('children').map((childTree: Immutable.Map<string, any>) => {
                   return <Tree key={childTree.get('id')}
                     dispatch={this.props.dispatch} currentTreeNode={this.props.currentTreeNode}
-                    {...{tree: childTree}} />;
+                    tree={childTree} />;
                 })}
               </ul>
             </ul>
