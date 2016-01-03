@@ -1,3 +1,4 @@
+import * as Immutable from 'immutable'
 import * as TreeInterfaces from './components/tree/tree-interfaces'
 
 export interface IItem {
@@ -11,6 +12,6 @@ export interface IRepository {
 }
 
 export interface IReduxConnected {
-  currentId?: string
+  currentTreeNode?: Immutable.Map<string, any>
   dispatch?: {(object: any): any}
 }

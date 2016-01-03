@@ -20,7 +20,7 @@ const containerNode: HTMLElement = document.getElementById('container')
 const render = (store) => {
   const ReduxContainer = connect((state) => {
     return {
-      currentId: state.get('currentId'),
+      currentTreeNode: state.get('currentTreeNode'),
       tree: state.get('tree')
     }
   })(Container)

@@ -13,12 +13,12 @@ export interface IContainerState { }
 
 export class Container extends React.Component<IContainerProps, IContainerState> {
   render() {
-    const { currentId, dispatch, tree } = this.props
+    const { currentTreeNode, dispatch, tree } = this.props
 
     return <div className="flex-container">
       <div className="flex-row">
         <aside className="tree">
-          <Tree key={tree.get('name')} dispatch={dispatch} currentId={currentId} {...{ tree: tree }} />
+          <Tree key={tree.get('name')} dispatch={dispatch} currentTreeNode={currentTreeNode} {...{ tree: tree }} />
         </aside>
         <Content />
       </div>

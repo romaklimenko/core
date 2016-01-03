@@ -38,7 +38,7 @@ export const TreeReducer = (state: Immutable.Map<string, any> = InitialState, ac
       return state.set('tree', Immutable.fromJS(tree))
       
     case TreeConstants.TREE_SELECT:
-      return state.set('currentId', node.id)
+      return state.set('currentTreeNode', Immutable.fromJS(node))
 
     case TreeConstants.TREE_FETCH_RESPONSE:
       delete node.loading
