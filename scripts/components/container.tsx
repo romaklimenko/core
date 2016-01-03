@@ -1,143 +1,26 @@
-'use strict';
+import * as Immutable from 'immutable'
+import { Content } from './content'
+import { Tree } from './tree/tree'
+import { Footer } from './footer'
+import * as Interfaces from '../interfaces'
 
-import { Content } from './Content';
-import { ITree, ITreeProps, ITreeState, Tree } from './Tree/Tree';
-import { Footer } from './Footer';
-
-export interface IContainerProps {
-}
-
-export interface IContainerState {
-}
-
-const tree: ITree = {
-  name: "sitecore",
-  children: [
-    {
-      name: "Content",
-      children: [
-        {
-          name: "Home",
-          children: []
-        },
-        {
-          name: "Layout",
-          children: [
-            {
-              name: "Controllers",
-              children: []
-            },
-            {
-              name: "Devices",
-              children: []
-            },
-            {
-              name: "Layouts",
-              children: []
-            },
-            {
-              name: "Models",
-              children: []
-            },
-            {
-              name: "Placeholder Settings",
-              children: []
-            },
-            {
-              name: "Renderings",
-              children: []
-            },
-            {
-              name: "Sublayouts",
-              children: []
-            },
-            {
-              name: "Simulators",
-              children: []
-            }
-          ]
-        },
-        {
-          name: "Media Library",
-          children: []
-        },
-        {
-          name: "Social",
-          children: []
-        },
-        {
-          name: "System",
-          children: [
-            {
-              name: "Aliases",
-              children: []
-            },
-            {
-              name: "App Center Sync",
-              children: []
-            },
-            {
-              name: "Dictionary",
-              children: []
-            },
-            {
-              name: "Languages",
-              children: []
-            },
-            {
-              name: "List Manager",
-              children: []
-            },
-            {
-              name: "Marketing Control Center",
-              children: []
-            },
-            {
-              name: "Modules",
-              children: []
-            },
-            {
-              name: "Proxies",
-              children: []
-            },
-            {
-              name: "Publishing Targets",
-              children: []
-            },
-            {
-              name: "Settings",
-              children: []
-            },
-            {
-              name: "Social",
-              children: []
-            },
-            {
-              name: "Tasks",
-              children: []
-            }
-          ]
-        }
-      ]
-    }
-  ]
-};
-
-const treeProps: ITreeProps = {
-  key: tree.name,
-  tree: tree
-};
+export interface IContainerProps extends React.Props<Container>, Interfaces.IReduxConnected {}
+export interface IContainerState {}
 
 export class Container extends React.Component<IContainerProps, IContainerState> {
   render() {
+    const { dispatch, state } = this.props
+    const tree: Immutable.Map<string, any> = state.get('tree')
+    const key: string = tree.get('id')
+
     return <div className="flex-container">
       <div className="flex-row">
         <aside className="tree">
-          <Tree key={tree.name} {...treeProps} />
+          <Tree key={key} dispatch={dispatch} state={state} tree={tree} />
         </aside>
-        <Content />
+        <Content state={state} />
       </div>
       <Footer database="master" />
-    </div>;
+    </div>
   }
 }

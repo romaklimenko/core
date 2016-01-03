@@ -1,11 +1,8 @@
-'use strict';
-
-export interface IFooterProps {
-  database: string;
+export interface IFooterProps extends React.Props<Footer> {
+  database: string
 }
 
-export interface IFooterState {
-}
+export interface IFooterState { }
 
 export class Footer extends React.Component<IFooterProps, IFooterState> {
   render() {

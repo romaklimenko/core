@@ -2,6 +2,14 @@
   "name": "core",
   "version": "0.0.1",
   "description": "⚛",
+  "dependencies": {
+    "bootstrap": "*",
+    "immutable": "*",
+    "react": "*",
+    "react-dom": "*",
+    "react-redux": "*",
+    "redux": "*"
+  },
   "devDependencies": {
     "browserify": "*",
     "babel-polyfill": "*",
@@ -14,14 +22,12 @@
     "gulp-sourcemaps": "*",
     "gulp-typescript": "*",
     "jest-cli": "*",
-    "react": "*",
-    "react-dom": "*",
     "react-addons-test-utils": "*",
-    "react-test-utils": "*"
+    "react-test-utils": "*",
+    "redux-thunk": "*"
   },
   "main": "main.js",
   "scripts": {
-    "preinstall": "npm install -g browserify typescript",
     "start": "electron dist",
     "test": "jest --config=jest.json"
   },

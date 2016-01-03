@@ -3,7 +3,7 @@
     "jsx": "react",
     "noResolve": true,
     "outDir": "build/es6",
-    "target": "ES6"
+    "target": "es6"
   },
   "exclude": [
     "build",
