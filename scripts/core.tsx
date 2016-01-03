@@ -26,3 +26,4 @@ const render = (store) => {
 render(store)
 
 store.dispatch(TreeActions.expand(store.getState().get('tree')))
+store.dispatch(TreeActions.select(store.getState().get('tree')))

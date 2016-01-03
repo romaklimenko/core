@@ -18,7 +18,7 @@ export class Container extends React.Component<IContainerProps, IContainerState>
         <aside className="tree">
           <Tree key={key} dispatch={dispatch} state={state} tree={tree} />
         </aside>
-        <Content />
+        <Content state={state} />
       </div>
       <Footer database="master" />
     </div>
