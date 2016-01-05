@@ -17,8 +17,10 @@ const findNode = (path: string, tree: TreeInterfaces.ITree): TreeInterfaces.ITre
   return undefined
 }
 
-export const TreeReducer = (state: Immutable.Map<string, any> = InitialState, action: any) => {
+export const TreeReducer = (state: Immutable.Map<string, any>, action: any) => {
   console.info('action', action)
+  
+  if (!state) state = InitialState
 
   if (action.type === '@@redux/INIT') return state
 
