@@ -38,7 +38,9 @@ export class Tree extends React.Component<TreeInterfaces.ITreeProps, TreeInterfa
   }
 
   render() {
-    const { dispatch, state, tree } = this.props
+    const dispatch = this.props.dispatch
+    const state: Immutable.Map<string, any> = this.props.state
+    const tree: Immutable.Map<string, any> = this.props.tree
     const id: string = tree.get('id')
     const name: string = tree.get('name')
     const currentTreeNode: Immutable.Map<string, any> = state.get('currentTreeNode')

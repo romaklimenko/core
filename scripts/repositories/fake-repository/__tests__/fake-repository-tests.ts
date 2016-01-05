@@ -18,9 +18,8 @@ describe('FakeRepository', () => {
         .getChildren('11111111-1111-1111-1111-111111111111')
         .then((items: Interfaces.IItem[]) => {
           expect(items.length).toBe(3)
-          expect(items.map((item: Interfaces.IItem) => {
-            return item.ID
-          })).toContain('D37E0440-68D0-4CFB-8F26-AC2FC3127307')
+          expect(items.map((item: Interfaces.IItem) => item.ID))
+            .toContain('D37E0440-68D0-4CFB-8F26-AC2FC3127307')
         })
     })
   })

@@ -9,7 +9,8 @@ export interface IContainerState {}
 
 export class Container extends React.Component<IContainerProps, IContainerState> {
   render() {
-    const { dispatch, state } = this.props
+    const dispatch = this.props.dispatch
+    const state: Immutable.Map<string, any> = this.props.state
     const tree: Immutable.Map<string, any> = state.get('tree')
     const key: string = tree.get('id')
 
