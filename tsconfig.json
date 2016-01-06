@@ -2,7 +2,7 @@
   "compilerOptions": {
     "jsx": "react",
     "noResolve": true,
-    "outDir": "build/es6",
+    "outDir": "build/js",
     "target": "es6"
   },
   "exclude": [

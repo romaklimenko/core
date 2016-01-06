@@ -1,7 +1,8 @@
+'use strict'
+
 import * as Interfaces from '../../interfaces'
 
-export class FakeRepository implements Interfaces.IRepository {
-
+class FakeRepository implements Interfaces.IRepository {
   data: Interfaces.IItem[] = data
 
   getChildren(itemId: string): Promise<Interfaces.IItem[]> {
@@ -39,3 +40,5 @@ const data: Interfaces.IItem[] = [
       { "ID": "0B412929-3CDD-40B9-9952-A2F813508F86", "Name": "ACA",  "Parent": "D8F96ED8-38BC-4050-897C-098D36232C6B" },
       { "ID": "56A3A0BB-16CA-4150-9715-B668931510EA", "Name": "ACB",  "Parent": "D8F96ED8-38BC-4050-897C-098D36232C6B" },
       { "ID": "141EC494-5069-41D3-B011-6D9A3BE73ECE", "Name": "ACC",  "Parent": "D8F96ED8-38BC-4050-897C-098D36232C6B" }]
+
+module.exports = FakeRepository

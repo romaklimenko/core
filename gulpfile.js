@@ -4,7 +4,6 @@
 const path        = require('path')
 
 // node_modules
-const babel       = require("gulp-babel")
 const del         = require('del')
 const gulp        = require('gulp')
 const less        = require('gulp-less')
@@ -20,15 +19,9 @@ const run = (command, callback) => {
 
 gulp.task('default', ['copy', 'less', 'browserify'])
 
-gulp.task('babel', ['typescript'], () => {
-  return gulp.src(['build/es6/**/*.js'])
-    .pipe(babel())
-    .pipe(gulp.dest('build/js'))
-})
-
-gulp.task('browserify', ['babel'], (callback) => {
+gulp.task('browserify', ['typescript'], (callback) => {
   run('browserify build/js/scripts/core.js -o dist/core.js', callback)
-  gulp.src('build/es6/main.js').pipe(gulp.dest('dist'))
+  gulp.src('build/js/main.js').pipe(gulp.dest('dist'))
 })
 
 gulp.task('clean', () => del(['build', 'dist']))

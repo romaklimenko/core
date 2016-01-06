@@ -1,15 +1,13 @@
-jest.dontMock('object-assign')
-jest.dontMock('../fake-repository')
-
-// TypeScript in current mode doesn't like require
-import { FakeRepository } from '../fake-repository'
-
-// Jest doesn't like ES2015 import
-const _FakeRepository = require('../fake-repository').FakeRepository
+'use strict'
 
 import * as Interfaces from '../../interfaces'
 
-const fakeRepository: Interfaces.IRepository = new _FakeRepository()
+jest.dontMock('object-assign')
+jest.dontMock('../fake-repository')
+
+const FakeRepository = require('../fake-repository')
+
+const fakeRepository: Interfaces.IRepository = new FakeRepository
 
 describe('FakeRepository', () => {
   describe('getChildren', () => {
