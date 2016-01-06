@@ -1,7 +1,17 @@
-import * as React from 'react'
-import * as Immutable from 'immutable'
-import * as TreeActions from './tree-actions'
+'use strict'
+
+import * as Interfaces from '../../interfaces'
 import * as TreeInterfaces from './tree-interfaces'
+
+const Immutable = require('immutable')
+const TreeActions = require('./tree-actions')
+
+export interface ITreeProps extends React.Props<TreeInterfaces.ITree>, Interfaces.IReduxConnected {
+  key: string
+  tree: Immutable.Map<string, any>
+}
+
+export interface ITreeState { }
 
 const getArrow = (tree: Immutable.Map<string, any>) => {
   if (tree.get('loading')) {
@@ -20,7 +30,7 @@ const getChildren = (tree: Immutable.Map<string, any>): Immutable.List<Map<strin
   return tree.get('children')
 }
 
-export class Tree extends React.Component<TreeInterfaces.ITreeProps, TreeInterfaces.ITreeState> {
+class Tree extends React.Component<ITreeProps, ITreeState> {
 
   toggle(e) {
     e.stopPropagation()
@@ -38,24 +48,25 @@ export class Tree extends React.Component<TreeInterfaces.ITreeProps, TreeInterfa
   }
 
   render() {
-    const { dispatch, state, tree } = this.props
-    const id: string = tree.get('id')
-    const name: string = tree.get('name')
-    const currentTreeNode: Immutable.Map<string, any> = state.get('currentTreeNode')
+    const tree: Immutable.Map<string, any> = this.props.tree
+    const currentTreeNode: Immutable.Map<string, any> = this.props.state.get('currentTreeNode')
 
-    const className = currentTreeNode && currentTreeNode.get('id') === id ?
-      'tree-selected' : ''
+    const className = currentTreeNode && currentTreeNode.get('id') === tree.get('id') ?
+      'tree-selected' : undefined
 
     return  <ul>
               <div onClick={e => this.select(e) } className={className}>
                 <img onClick={e => this.toggle(e)} src={getArrow(tree)} />
-                <span>{name}</span>
+                <span>{tree.get('name')}</span>
               </div>
               <ul>
                 {tree.get('children').map((child: Immutable.Map<string, any>) => {
-                  return <Tree key={child.get('id')} dispatch={dispatch} state={state} tree={child} />
+                  return <Tree key={child.get('id')}
+                    dispatch={this.props.dispatch} state={this.props.state} tree={child} />
                 })}
               </ul>
             </ul>
   }
 }
+
+module.exports = Tree

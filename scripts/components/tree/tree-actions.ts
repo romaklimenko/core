@@ -1,24 +1,20 @@
+'use strict'
+
 import * as Interfaces from '../../interfaces'
-import { FakeRepository } from '../../repositories/fake-repository/fake-repository'
-import * as TreeConstants from './tree-constants'
+
+const FakeRepository = require('../../repositories/fake-repository/fake-repository')
+const TreeConstants = require('./tree-constants')
 
 const repository: Interfaces.IRepository = new FakeRepository
 
-export const collapse = (tree: Immutable.Map<string, any>) => {
+const collapse = (tree: Immutable.Map<string, any>) => {
   return {
     type: TreeConstants.TREE_COLLAPSE,
     tree
   }
 }
 
-export const select = (tree: Immutable.Map<string, any>) => {
-  return {
-    type: TreeConstants.TREE_SELECT,
-    tree
-  }
-}
-
-export const expand = (tree: Immutable.Map<string, any>) => {
+const expand = (tree: Immutable.Map<string, any>) => {
   return dispatch => {
     dispatch({ type: TreeConstants.TREE_EXPAND, tree })
     return repository.getChildren(tree.get('id'))
@@ -31,7 +27,14 @@ export const expand = (tree: Immutable.Map<string, any>) => {
   }
 }
 
-export const fetchResponse = (tree: Immutable.Map<string, any>, children: Interfaces.IItem[]) => {
+const fetchFailure = (reason: any) => {
+  return {
+    type: TreeConstants.TREE_FETCH_FAILURE,
+    reason
+  }
+}
+
+const fetchResponse = (tree: Immutable.Map<string, any>, children: Interfaces.IItem[]) => {
   return {
     type: TreeConstants.TREE_FETCH_RESPONSE,
     tree,
@@ -39,9 +42,17 @@ export const fetchResponse = (tree: Immutable.Map<string, any>, children: Interf
   }
 }
 
-export const fetchFailure = (reason: any) => {
+const select = (tree: Immutable.Map<string, any>) => {
   return {
-    type: TreeConstants.TREE_FETCH_FAILURE,
-    reason
+    type: TreeConstants.TREE_SELECT,
+    tree
   }
+}
+
+module.exports = {
+  collapse,
+  expand,
+  fetchFailure,
+  fetchResponse,
+  select
 }

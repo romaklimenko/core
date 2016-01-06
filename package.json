@@ -11,17 +11,11 @@
     "redux": "*"
   },
   "devDependencies": {
-    "babel-plugin-transform-es2015-destructuring": "*",
-    "babel-plugin-transform-es2015-modules-commonjs": "*",
-    "babel-plugin-transform-es2015-parameters": "*",
-    "babel-polyfill": "*",
     "browserify": "*",
     "del": "*",
     "electron-prebuilt": "*",
     "gulp": "*",
-    "gulp-babel": "*",
     "gulp-less": "*",
-    "gulp-sourcemaps": "*",
     "gulp-typescript": "*",
     "jest-cli": "*",
     "react-addons-test-utils": "*",

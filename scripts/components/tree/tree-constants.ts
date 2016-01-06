@@ -1,5 +1,15 @@
-export const TREE_FETCH_RESPONSE     = 'TREE_FETCH_RESPONSE'
-export const TREE_FETCH_FAILURE      = 'TREE_FETCH_FAILURE'
-export const TREE_COLLAPSE           = 'TREE_COLLAPSE'
-export const TREE_EXPAND             = 'TREE_EXPAND'
-export const TREE_SELECT             = 'TREE_SELECT'
+'use strict'
+
+const TREE_EXPAND             = 'TREE_EXPAND'
+const TREE_COLLAPSE           = 'TREE_COLLAPSE'
+const TREE_FETCH_FAILURE      = 'TREE_FETCH_FAILURE'
+const TREE_FETCH_RESPONSE     = 'TREE_FETCH_RESPONSE'
+const TREE_SELECT             = 'TREE_SELECT'
+
+module.exports = {
+  TREE_COLLAPSE,
+  TREE_EXPAND,
+  TREE_FETCH_FAILURE,
+  TREE_FETCH_RESPONSE,
+  TREE_SELECT
+}

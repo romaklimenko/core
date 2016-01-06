@@ -1,11 +1,14 @@
-import * as TreeConstants from './tree-constants'
+'use strict'
+
 import * as TreeInterfaces from './tree-interfaces'
-import { InitialState } from '../../initial-state'
+
+const InitialState = require('../../initial-state')
+const TreeConstants = require('./tree-constants')
 
 const pathReducer = (tree: TreeInterfaces.ITree, id: string, index: number, array: string[]): TreeInterfaces.ITree => {
-    const child: TreeInterfaces.ITree = tree.children.filter(
-      (x: TreeInterfaces.ITree) => x.id === id)[0]
-    return child
+  const child: TreeInterfaces.ITree = tree.children.filter(
+    (x: TreeInterfaces.ITree) => x.id === id)[0]
+  return child
 }
 
 const findNode = (path: string, tree: TreeInterfaces.ITree): TreeInterfaces.ITree => {
@@ -17,8 +20,10 @@ const findNode = (path: string, tree: TreeInterfaces.ITree): TreeInterfaces.ITre
   return undefined
 }
 
-export const TreeReducer = (state: Immutable.Map<string, any> = InitialState, action: any) => {
+const TreeReducer = (state: Immutable.Map<string, any>, action: any) => {
   console.info('action', action)
+  
+  if (!state) state = InitialState
 
   if (action.type === '@@redux/INIT') return state
 
@@ -63,3 +68,5 @@ export const TreeReducer = (state: Immutable.Map<string, any> = InitialState, ac
       return state
   }
 }
+
+module.exports = TreeReducer

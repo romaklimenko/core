@@ -1,5 +1,6 @@
+'use strict'
+
 import * as Interfaces from '../interfaces'
-import { Tree } from './tree'
 
 export interface ITree {
   id: string
@@ -8,10 +9,3 @@ export interface ITree {
   children: Array<ITree>
   loading?: boolean
 }
-
-export interface ITreeProps extends React.Props<Tree>, Interfaces.IReduxConnected {
-  key: string
-  tree: Immutable.Map<string, any>
-}
-
-export interface ITreeState { }
