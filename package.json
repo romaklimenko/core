@@ -17,15 +17,15 @@
     "gulp": "*",
     "gulp-less": "*",
     "gulp-typescript": "*",
-    "jest-cli": "*",
     "react-addons-test-utils": "*",
     "react-test-utils": "*",
-    "redux-thunk": "*"
+    "redux-thunk": "*",
+    "tape": "*"
   },
   "main": "main.js",
   "scripts": {
     "start": "electron dist",
-    "test": "jest --config=jest.json"
+    "test": "tape build/js/scripts/**/*-test.js"
   },
   "repository": {
     "type": "git",
