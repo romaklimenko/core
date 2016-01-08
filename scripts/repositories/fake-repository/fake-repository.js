@@ -1,23 +1,6 @@
 'use strict'
 
-import * as Interfaces from '../../interfaces'
-
-class FakeRepository implements Interfaces.IRepository {
-  data: Interfaces.IItem[] = data
-
-  getChildren(itemId: string): Promise<Interfaces.IItem[]> {
-    return new Promise<Interfaces.IItem[]>(
-      resolve => {
-        resolve(
-          this.data.filter(
-            (value: Interfaces.IItem) => value.Parent === itemId)
-        )
-      }
-    )
-  }
-}
-
-const data: Interfaces.IItem[] = [
+const data = [
   { "ID": "11111111-1111-1111-1111-111111111111", "Name": "A",    "Parent": "00000000-0000-0000-0000-000000000000" },
     { "ID": "D37E0440-68D0-4CFB-8F26-AC2FC3127307", "Name": "AA",   "Parent": "11111111-1111-1111-1111-111111111111" },
       { "ID": "E6AD9C46-AFE6-4560-BC6E-FA02B6C3FC44", "Name": "AAA",  "Parent": "D37E0440-68D0-4CFB-8F26-AC2FC3127307" },
@@ -40,5 +23,17 @@ const data: Interfaces.IItem[] = [
       { "ID": "0B412929-3CDD-40B9-9952-A2F813508F86", "Name": "ACA",  "Parent": "D8F96ED8-38BC-4050-897C-098D36232C6B" },
       { "ID": "56A3A0BB-16CA-4150-9715-B668931510EA", "Name": "ACB",  "Parent": "D8F96ED8-38BC-4050-897C-098D36232C6B" },
       { "ID": "141EC494-5069-41D3-B011-6D9A3BE73ECE", "Name": "ACC",  "Parent": "D8F96ED8-38BC-4050-897C-098D36232C6B" }]
+
+class FakeRepository {
+  getChildren(itemId) {
+    return new Promise(
+      resolve => {
+        resolve(
+          data.filter((value) => value.Parent === itemId)
+        )
+      }
+    )
+  }
+}
 
 module.exports = FakeRepository

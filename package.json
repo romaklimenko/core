@@ -16,7 +16,6 @@
     "electron-prebuilt": "*",
     "gulp": "*",
     "gulp-less": "*",
-    "gulp-typescript": "*",
     "react-addons-test-utils": "*",
     "react-test-utils": "*",
     "redux-thunk": "*",
@@ -25,7 +24,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron dist",
-    "test": "tape build/js/scripts/**/*-test.js"
+    "test": "tape scripts/**/*-test.js"
   },
   "repository": {
     "type": "git",
