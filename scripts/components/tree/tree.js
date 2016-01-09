@@ -5,68 +5,67 @@ const React = require('react')
 
 const TreeActions = require('./tree-actions')
 
-const getChildren = (tree) => {
-  return tree.get('children')
-}
-
-const getArrow = (tree) => {
-  if (tree.get('loading')) {
-    return 'img/loading.svg'
+const Tree = (props) => {
+  const getChildren = (tree) => {
+    return tree.get('children')
   }
 
-  if (tree.get('children').size === 0) {
-    return 'img/arrow-collapse.svg'
-  }
-  else {
-    return 'img/arrow-expand.svg'
-  }
-}
+  const getArrow = (tree) => {
+    if (tree.get('loading')) {
+      return 'img/loading.svg'
+    }
 
-class Tree extends React.Component {
-  toggle(e) {
-    e.stopPropagation()
-    if (this.props.tree.get('children').size !== 0) {
-      this.props.dispatch(TreeActions.collapse(this.props.tree))
+    if (tree.get('children').size === 0) {
+      return 'img/arrow-collapse.svg'
     }
     else {
-      this.props.dispatch(TreeActions.expand(this.props.tree))
+      return 'img/arrow-expand.svg'
     }
   }
 
-  select(e) {
+  const toggle = (e) => {
     e.stopPropagation()
-    this.props.dispatch(TreeActions.select(this.props.tree))
+    if (props.tree.get('children').size !== 0) {
+      props.dispatch(TreeActions.collapse(props.tree))
+    }
+    else {
+      props.dispatch(TreeActions.expand(props.tree))
+    }
   }
 
-  render() {
-    const currentTreeNode = this.props.state.get('currentTreeNode')
+  const select = (e) => {
+    e.stopPropagation()
+    props.dispatch(TreeActions.select(props.tree))
+  }
 
-    const className = currentTreeNode && currentTreeNode.get('id') === this.props.tree.get('id') ?
-      'tree-selected' : undefined
+  const currentTreeNode = props.state.get('currentTreeNode')
 
-    return React.createElement(
+  const className = currentTreeNode && currentTreeNode.get('id') === props.tree.get('id') ?
+    'tree-selected' : undefined
+
+  return React.createElement(
+          'ul',
+          null,
+          React.createElement(
+            'div',
+            { onClick: (e) => { return select(e) }, className: className },
+            React.createElement('img', { onClick: (e) => {
+              return toggle(e) }, src: getArrow(props.tree)
+            }),
+            React.createElement(
+              'span',
+              null,
+              props.tree.get('name')
+            )
+          ),
+          React.createElement(
             'ul',
             null,
-            React.createElement(
-              'div',
-              { onClick: (e) => { return this.select(e) }, className: className },
-              React.createElement('img', { onClick: (e) => { return this.toggle(e) }, src: getArrow(this.props.tree) }),
-              React.createElement(
-                'span',
-                null,
-                this.props.tree.get('name')
-              )
-            ),
-            React.createElement(
-              'ul',
-              null,
-              this.props.tree.get('children').map((child) => {
-                return React.createElement(Tree, { key: child.get('id'),
-                  dispatch: this.props.dispatch, state: this.props.state, tree: child })
-              })
-            )
+            props.tree.get('children').map((child) => {
+              return React.createElement(Tree, { key: child.get('id'),
+                dispatch: props.dispatch, state: props.state, tree: child })
+            })
           )
-  }
-}
+        ) }
 
 module.exports = Tree

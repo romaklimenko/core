@@ -2,18 +2,13 @@
 
 const React = require('react')
 
-class Footer extends React.Component {
-  render() {
-    return React.createElement(
-      'footer',
-      { id: 'footer' },
-      React.createElement(
-        'div',
-        null,
-        this.props.database
-      )
-    )
-  }
-}
+const Footer = (props) => {
+  return React.createElement(
+    'footer',
+    { id: 'footer' },
+    React.createElement(
+      'div',
+      null,
+      props.database)) }
 
 module.exports = Footer
