@@ -1,50 +1,32 @@
 'use strict'
 
-const FakeRepository = require('../../repositories/fake-repository/fake-repository')
+const Repository = require('../../repositories/fake-repository/fake-repository')
 const TreeConstants = require('./tree-constants')
+const TreeUtils = require('./tree-utils')
 
-const repository = new FakeRepository
-
-const collapse = (tree) => {
-  return {
-    type: TreeConstants.TREE_COLLAPSE,
-    tree
-  }
-}
-
-const expand = (tree) => {
-  return dispatch => {
-    dispatch({ type: TreeConstants.TREE_EXPAND, tree })
-    return repository.getChildren(tree.get('id'))
-      .then((children) => {
-        dispatch(fetchResponse(tree, children))
-      })
-      .catch((reason) => {
-        dispatch(fetchFailure(reason))
-      })
-  }
+const collapse = (path) => {
+  return { type: TreeConstants.TREE_COLLAPSE, path }
 }
 
 const fetchFailure = (reason) => {
-  return {
-    type: TreeConstants.TREE_FETCH_FAILURE,
-    reason
+  return { type: TreeConstants.TREE_FETCH_FAILURE, reason }
+}
+
+const fetchResponse = (path, children) => {
+  return { type: TreeConstants.TREE_FETCH_RESPONSE, path, children }
+}
+
+const expand = (path) => {
+  return dispatch => {
+    dispatch({ type: TreeConstants.TREE_EXPAND, path })
+    return Repository.getChildren(TreeUtils.getIdFromPath(path))
+      .then( (children) => { dispatch(fetchResponse(path, children)) })
+      .catch((reason)   => { dispatch(fetchFailure(reason)) })
   }
 }
 
-const fetchResponse = (tree, children) => {
-  return {
-    type: TreeConstants.TREE_FETCH_RESPONSE,
-    tree,
-    children
-  }
-}
-
-const select = (tree) => {
-  return {
-    type: TreeConstants.TREE_SELECT,
-    tree
-  }
+const select = (path) => {
+  return { type: TreeConstants.TREE_SELECT, path }
 }
 
 module.exports = {
