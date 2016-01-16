@@ -6,8 +6,6 @@ const InitialState = require('../../initial-state')
 const TreeConstants = require('./tree-constants')
 
 const TreeReducer = (state, action) => {
-  console.info('action', action)
-
   if (!state) state = InitialState
 
   if (action.type === '@@redux/INIT') { return state }

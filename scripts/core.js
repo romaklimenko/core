@@ -7,11 +7,13 @@ const Redux = require('redux')
 const Thunk = require('redux-thunk')
 
 const Container = require('./components/container')
+const Logger = require('./middleware/logger')
 const TreeActions = require('./components/tree/tree-actions')
 const TreeReducers = require('./components/tree/tree-reducers')
 
-const createStoreWithMiddleware = Redux.applyMiddleware(Thunk) (Redux.createStore)
-const store = createStoreWithMiddleware(TreeReducers.TreeReducer)
+let createStore = Redux.applyMiddleware(Logger) (Redux.createStore)
+    createStore = Redux.applyMiddleware(Thunk)  (createStore)
+const store = createStore(TreeReducers.TreeReducer)
 
 const containerNode = document.getElementById('container')
 
@@ -28,7 +30,6 @@ const render = (store) => {
 }
 
 store.subscribe(() => {
-  console.info('state', store.getState())
   render(store)
 })
 
