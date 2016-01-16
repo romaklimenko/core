@@ -13,7 +13,10 @@ const Tree = (props) => {
     }
 
     if (TreeUtils.children(state, path).count() === 0) {
-      return 'img/arrow-collapse.svg'
+      if (props.state.getIn(['tree', path, 'hasChildren'])) {
+        return 'img/arrow-collapse.svg'
+      }
+      return 'img/refresh.svg'
     }
     else {
       return 'img/arrow-expand.svg'
@@ -42,7 +45,8 @@ const Tree = (props) => {
     React.createElement('div', { onClick: (e) => select(e), className: className },
       React.createElement('img', {
         onClick: (e) => toggle(e),
-        src: getArrow(props.state, props.path)
+        src: getArrow(props.state, props.path),
+        style: { heigth: '16px', width: '16px' }
       }),
       React.createElement('span', null, props.state.getIn(['tree', props.path, 'name']))),
     React.createElement('ul', null,

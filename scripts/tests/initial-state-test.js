@@ -12,8 +12,8 @@ test('InitialState behaves as expected', (assert) => {
   const state = InitialState.setIn(['tree', '[A]'], Immutable.fromJS({ path: '[A]' }))
 
   assert.equal(
-    state.getIn(['tree', '11111111-1111-1111-1111-111111111111', 'path']),
-    '11111111-1111-1111-1111-111111111111')
+    state.getIn(['tree', '/{11111111-1111-1111-1111-111111111111}', 'path']),
+    '/{11111111-1111-1111-1111-111111111111}')
   assert.equal(state.getIn(['tree', '[A]', 'path']), '[A]')
 
   assert.equal(InitialState.get('tree').count(), 1)

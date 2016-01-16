@@ -28,11 +28,13 @@ const TreeReducer = (state, action) => {
       let newState = state
       action.children.map(v => {
         newState = newState.setIn(
-          ['tree', v.Path],
+          ['tree', v.LongID],
           Immutable.fromJS({
             id: v.ID,
-            name: v.Name,
-            path: v.Path
+            name: v.DisplayName,
+            path: v.LongID,
+            hasChildren: v.HasChildren,
+            data: v
           }))
       })
       return newState.setIn(['tree', action.path, 'loading'], false)

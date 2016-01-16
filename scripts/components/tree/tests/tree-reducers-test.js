@@ -24,21 +24,21 @@ test('TreeReducer returns InitialState if passed state is undefined.', (assert) 
 })
 
 test('TreeReducer.TREE_COLLAPSE', (assert) => {
-  const action = { type: TreeConstants.TREE_COLLAPSE, path: '11111111-1111-1111-1111-111111111111/A' }
+  const action = { type: TreeConstants.TREE_COLLAPSE, path: '/{11111111-1111-1111-1111-111111111111}/A' }
 
   const state = InitialState
     .setIn(
-      ['tree', '11111111-1111-1111-1111-111111111111/A'],
-      Immutable.fromJS({ path: '11111111-1111-1111-1111-111111111111/A' }))
+      ['tree', '/{11111111-1111-1111-1111-111111111111}/A'],
+      Immutable.fromJS({ path: '/{11111111-1111-1111-1111-111111111111}/A' }))
     .setIn(
-      ['tree', '11111111-1111-1111-1111-111111111111/A/AA'],
-      Immutable.fromJS({ path: '11111111-1111-1111-1111-111111111111/A/AA' }))
+      ['tree', '/{11111111-1111-1111-1111-111111111111}/A/AA'],
+      Immutable.fromJS({ path: '/{11111111-1111-1111-1111-111111111111}/A/AA' }))
     .setIn(
-      ['tree', '11111111-1111-1111-1111-111111111111/A/AA/AAA'],
-      Immutable.fromJS({ path: '11111111-1111-1111-1111-111111111111/A/AA/AAA' }))
+      ['tree', '/{11111111-1111-1111-1111-111111111111}/A/AA/AAA'],
+      Immutable.fromJS({ path: '/{11111111-1111-1111-1111-111111111111}/A/AA/AAA' }))
     .setIn(
-      ['tree', '11111111-1111-1111-1111-111111111111/A/AB'],
-      Immutable.fromJS({ path: '11111111-1111-1111-1111-111111111111/A/AB' }))
+      ['tree', '/{11111111-1111-1111-1111-111111111111}/A/AB'],
+      Immutable.fromJS({ path: '/{11111111-1111-1111-1111-111111111111}/A/AB' }))
 
   assert.equal(state.get('tree').count(), 5)
 
@@ -50,7 +50,7 @@ test('TreeReducer.TREE_COLLAPSE', (assert) => {
 })
 
 test('TreeReducer.TREE_EXPAND', (assert) => {
-  const action = { type: TreeConstants.TREE_EXPAND, path: '11111111-1111-1111-1111-111111111111' }
+  const action = { type: TreeConstants.TREE_EXPAND, path: '/{11111111-1111-1111-1111-111111111111}' }
 
   const state = InitialState
 
@@ -63,15 +63,15 @@ test('TreeReducer.TREE_EXPAND', (assert) => {
 test('TreeReducer.TREE_FETCH_RESPONSE', (assert) => {
   const action = {
     type: TreeConstants.TREE_FETCH_RESPONSE,
-    path: '11111111-1111-1111-1111-111111111111',
+    path: '/{11111111-1111-1111-1111-111111111111}',
     children: [
-      { Path: '11111111-1111-1111-1111-111111111111/A/AA' },
-      { Path: '11111111-1111-1111-1111-111111111111/A/AB' },
-      { Path: '11111111-1111-1111-1111-111111111111/A/AC' }
+      { LongID: '/{11111111-1111-1111-1111-111111111111}/A/AA' },
+      { LongID: '/{11111111-1111-1111-1111-111111111111}/A/AB' },
+      { LongID: '/{11111111-1111-1111-1111-111111111111}/A/AC' }
     ]
   }
 
-  const state = InitialState.setIn(['tree', '11111111-1111-1111-1111-111111111111', 'loading'], true)
+  const state = InitialState.setIn(['tree', '/{11111111-1111-1111-1111-111111111111}', 'loading'], true)
   assert.equal(state.get('tree').count(), 1)
   assert.equal(state.getIn(['tree', action.path, 'loading']), true)
 

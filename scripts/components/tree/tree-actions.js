@@ -1,6 +1,6 @@
 'use strict'
 
-const Repository = require('../../repositories/fake-repository/fake-repository')
+const Repository = require('../../repositories/sitecore-repository')
 const TreeConstants = require('./tree-constants')
 const TreeUtils = require('./tree-utils')
 

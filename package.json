@@ -19,12 +19,13 @@
     "react-test-utils": "*",
     "redux": "*",
     "redux-thunk": "*",
+    "superagent": "*",
     "tape": "*"
   },
   "main": "main.js",
   "scripts": {
     "start": "electron dist",
-    "test": "tape scripts/**/**/*-test.js"
+    "test": "tape 'scripts/**/*test.js'"
   },
   "repository": {
     "type": "git",
