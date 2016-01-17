@@ -4,7 +4,7 @@
 
 <img src="https://raw.githubusercontent.com/romaklimenko/core/master/img/core.png" height="128" width="128" />
 
-Core is a Sitecore cross platform desktop application. It runs on Mac, Windows and Linux.
+Core is a Sitecore cross platform desktop application. It runs on Mac, Windows and Linux. https://vimeo.com/152064489
 
 Mac OS X:
 
