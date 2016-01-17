@@ -8,11 +8,11 @@ Core is a Sitecore cross platform desktop application. It runs on Mac, Windows a
 
 Mac OS X:
 
-<img src="https://raw.githubusercontent.com/romaklimenko/core/master/img/screenshot-mac.png" height="600" />
+<img src="https://raw.githubusercontent.com/romaklimenko/core/master/img/screenshot-mac.png" height="600" width="800" />
 
 Windows:
 
-<img src="https://raw.githubusercontent.com/romaklimenko/core/master/img/screenshot-win.png" height="500" style="margin-left:500px;" />
+<img src="https://raw.githubusercontent.com/romaklimenko/core/master/img/screenshot-win.png" height="500" style="margin-left:500px;" width="800" />
 
 ## Under the hood
 
