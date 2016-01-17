@@ -8,31 +8,46 @@ const collapse = (path) => {
   return { type: TreeConstants.TREE_COLLAPSE, path }
 }
 
-const fetchFailure = (reason) => {
-  return { type: TreeConstants.TREE_FETCH_FAILURE, reason }
+const fetchChildrenFailure = (reason) => {
+  return { type: TreeConstants.TREE_FETCH_CHILDREN_FAILURE, reason }
 }
 
-const fetchResponse = (path, children) => {
-  return { type: TreeConstants.TREE_FETCH_RESPONSE, path, children }
+const fetchChildrenResponse = (path, children) => {
+  return { type: TreeConstants.TREE_FETCH_CHILDREN_RESPONSE, path, children }
+}
+
+const fetchItemFailure = (reason) => {
+  return { type: TreeConstants.TREE_FETCH_ITEM_FAILURE, reason }
+}
+
+const fetchItemResponse = (path, item) => {
+  return { type: TreeConstants.TREE_FETCH_ITEM_RESPONSE, path, item }
 }
 
 const expand = (path) => {
   return dispatch => {
     dispatch({ type: TreeConstants.TREE_EXPAND, path })
     return Repository.getChildren(TreeUtils.getIdFromPath(path))
-      .then( (children) => { dispatch(fetchResponse(path, children)) })
-      .catch((reason)   => { dispatch(fetchFailure(reason)) })
+      .then( (children) => { dispatch(fetchChildrenResponse(path, children)) })
+      .catch((reason)   => { dispatch(fetchChildrenFailure(reason)) })
   }
 }
 
 const select = (path) => {
-  return { type: TreeConstants.TREE_SELECT, path }
+  return dispatch => {
+    dispatch({ type: TreeConstants.TREE_SELECT, path })
+    return Repository.getItem(TreeUtils.getIdFromPath(path))
+      .then( (item)   => { dispatch(fetchItemResponse(path, item)) })
+      .catch((reason) => { dispatch(fetchItemFailure(reason)) })
+  }
 }
 
 module.exports = {
   collapse,
   expand,
-  fetchFailure,
-  fetchResponse,
+  fetchChildrenFailure,
+  fetchChildrenResponse,
+  fetchItemFailure,
+  fetchItemResponse,
   select
 }

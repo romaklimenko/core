@@ -60,9 +60,9 @@ test('TreeReducer.TREE_EXPAND', (assert) => {
   assert.end()
 })
 
-test('TreeReducer.TREE_FETCH_RESPONSE', (assert) => {
+test('TreeReducer.TREE_FETCH_CHILDREN_RESPONSE', (assert) => {
   const action = {
-    type: TreeConstants.TREE_FETCH_RESPONSE,
+    type: TreeConstants.TREE_FETCH_CHILDREN_RESPONSE,
     path: '/{11111111-1111-1111-1111-111111111111}',
     children: [
       { LongID: '/{11111111-1111-1111-1111-111111111111}/A/AA' },
@@ -79,5 +79,58 @@ test('TreeReducer.TREE_FETCH_RESPONSE', (assert) => {
 
   assert.equal(newState.getIn(['tree', action.path, 'loading']), false)
   assert.equal(newState.get('tree').count(), 4)
+  assert.end()
+})
+
+test('TreeReducer.TREE_FETCH_ITEM_RESPONSE', (assert) => {
+  const action = {
+    type: TreeConstants.TREE_FETCH_ITEM_RESPONSE,
+    path: '/{11111111-1111-1111-1111-111111111111}',
+    item: {
+      ID: '{11111111-1111-1111-1111-111111111111}',
+      DisplayName: 'new-sitecore',
+      LongID: '/{11111111-1111-1111-1111-111111111111}',
+      HasChildren: true
+    }
+  }
+
+  const state = InitialState
+
+  const newState = TreeReducers.TreeReducer(state, action)
+
+  assert.equal(newState.getIn(['tree', action.path, 'loading']), false)
+  assert.equal(newState.getIn(['tree', action.path, 'id']), action.item.ID)
+  assert.equal(newState.getIn(['tree', action.path, 'name']), action.item.DisplayName)
+  assert.equal(newState.getIn(['tree', action.path, 'path']), action.item.LongID)
+  assert.equal(newState.getIn(['tree', action.path, 'hasChildren']), action.item.HasChildren)
+  assert.deepEqual(newState.getIn(['tree', action.path, 'data']).toObject(), action.item)
+
+  assert.end()
+})
+
+test('TreeReducer.TREE_SELECT', (assert) => {
+  const action = {
+    type: TreeConstants.TREE_SELECT,
+    path: '/{11111111-1111-1111-1111-111111111111}/A/AA'
+  }
+
+  const state = InitialState
+    .setIn(
+      ['tree', '/{11111111-1111-1111-1111-111111111111}/A'],
+      Immutable.fromJS({ path: '/{11111111-1111-1111-1111-111111111111}/A' }))
+    .setIn(
+      ['tree', '/{11111111-1111-1111-1111-111111111111}/A/AA'],
+      Immutable.fromJS({ path: '/{11111111-1111-1111-1111-111111111111}/A/AA' }))
+    .setIn(
+      ['tree', '/{11111111-1111-1111-1111-111111111111}/A/AA/AAA'],
+      Immutable.fromJS({ path: '/{11111111-1111-1111-1111-111111111111}/A/AA/AAA' }))
+    .setIn(
+      ['tree', '/{11111111-1111-1111-1111-111111111111}/A/AB'],
+      Immutable.fromJS({ path: '/{11111111-1111-1111-1111-111111111111}/A/AB' }))
+
+  const newState = TreeReducers.TreeReducer(state, action)
+
+  assert.equal(newState.get('currentTreeNode'), action.path)
+  assert.equal(newState.getIn(['tree', action.path, 'loading']), true)
   assert.end()
 })

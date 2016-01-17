@@ -23,3 +23,14 @@ test('SitecoreRepository.getChildren', (assert) => {
       assert.fail(reason)
       assert.end() })
 })
+
+test('SitecoreRepository.getItem', (assert) => {
+  const templatesItemId = '{3C1715FE-6A13-4FCF-845F-DE308BA9741D}'
+  const promise = SitecoreRepository.getItem(templatesItemId)
+    .then(item => {
+      assert.equal(item.ID, '{3C1715FE-6A13-4FCF-845F-DE308BA9741D}')
+      assert.end() })
+    .catch(reason => {
+      assert.fail(reason)
+      assert.end() })
+})
