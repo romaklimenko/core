@@ -8,11 +8,11 @@ Core is a Sitecore cross platform desktop application. It runs on Mac, Windows a
 
 Mac OS X:
 
-<img src="https://raw.githubusercontent.com/romaklimenko/core/master/img/screenshot-mac.png" height="600" width="800" />
+<img src="https://raw.githubusercontent.com/romaklimenko/core/master/img/screenshot-mac.png" />
 
 Windows:
 
-<img src="https://raw.githubusercontent.com/romaklimenko/core/master/img/screenshot-win.png" height="500" style="margin-left:500px;" width="800" />
+<img src="https://raw.githubusercontent.com/romaklimenko/core/master/img/screenshot-win.png" />
 
 ## Under the hood
 
@@ -20,9 +20,9 @@ Here are main technologies on which Core is based on:
  * [Electron](http://electron.atom.io/)
  * [React](https://facebook.github.io/react/)
  * [Redux](http://redux.js.org/)
- 
+
 But I didn't intend to use as many buzzwords as possible. I take simplicity, ease of adding new features and supportability at the first place. This is why there is no TypeScript, JSX and Babel traspillers at the current stage of the project.
- 
+
 
 ## Setting up Sitecore
 
