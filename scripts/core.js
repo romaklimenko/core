@@ -11,6 +11,8 @@ const Logger = require('./middleware/logger')
 const TreeActions = require('./components/tree/tree-actions')
 const TreeReducers = require('./components/tree/tree-reducers')
 
+const perf = require('./tools/perf')
+
 let createStore = Redux.applyMiddleware(Logger) (Redux.createStore)
     createStore = Redux.applyMiddleware(Thunk)  (createStore)
 const store = createStore(TreeReducers.TreeReducer)
@@ -30,9 +32,9 @@ const render = (store) => {
 }
 
 store.subscribe(() => {
-  render(store)
+  perf(() => render(store), 'render')
 })
 
-render(store)
+perf(() => render(store), 'initial render')
 store.dispatch(TreeActions.expand(store.getState().get('tree').first().get('path')))
 store.dispatch(TreeActions.select(store.getState().get('tree').first().get('path')))
