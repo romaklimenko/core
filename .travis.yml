@@ -2,5 +2,5 @@ language: node_js
 node_js:
   - "5.3"
 before_script:
-  - npm install -g browserify gulp jest-cli typescript
+  - npm install -g browserify gulp
 script: gulp ; npm test
