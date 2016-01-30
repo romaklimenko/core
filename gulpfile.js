@@ -27,12 +27,15 @@ gulp.task('browserify', (callback) => {
 gulp.task('clean', () => del(['dist']))
 
 gulp.task('copy', () => {
-  return gulp.src([
+  gulp.src([
     'index.html',
     'package.json',
     '*img/**/*'
   ])
   .pipe(gulp.dest('dist'))
+
+  gulp.src('node_modules/bootstrap/dist/css/bootstrap.css')
+    .pipe(gulp.dest('dist/css'))
 })
 
 gulp.task('less', () => {

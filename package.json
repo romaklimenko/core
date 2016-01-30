@@ -2,10 +2,8 @@
   "name": "core",
   "version": "0.0.2",
   "description": "⚛",
-  "dependencies": {
-    "bootstrap": "*"
-  },
   "devDependencies": {
+    "bootstrap": "*",
     "browserify": "*",
     "del": "*",
     "electron-prebuilt": "*",
