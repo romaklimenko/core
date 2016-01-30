@@ -20,19 +20,22 @@ const run = (command, callback) => {
 gulp.task('default', ['copy', 'less', 'browserify'])
 
 gulp.task('browserify', (callback) => {
-  run('browserify scripts/core.js -o dist/bundle.js', callback)
+  run('node_modules/browserify/bin/cmd.js scripts/core.js -o dist/bundle.js', callback)
   gulp.src('main.js').pipe(gulp.dest('dist'))
 })
 
 gulp.task('clean', () => del(['dist']))
 
 gulp.task('copy', () => {
-  return gulp.src([
+  gulp.src([
     'index.html',
     'package.json',
     '*img/**/*'
   ])
   .pipe(gulp.dest('dist'))
+
+  gulp.src('node_modules/bootstrap/dist/css/bootstrap.css')
+    .pipe(gulp.dest('dist/css'))
 })
 
 gulp.task('less', () => {
