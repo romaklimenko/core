@@ -13,8 +13,12 @@ const TreeReducers = require('./components/tree/tree-reducers')
 
 const perf = require('./tools/perf')
 
-let createStore = Redux.applyMiddleware(Logger) (Redux.createStore)
-    createStore = Redux.applyMiddleware(Thunk)  (createStore)
+const createStore = Redux.compose(
+  Redux.applyMiddleware(Logger),
+  Redux.applyMiddleware(Thunk),
+  window.devToolsExtension ? window.devToolsExtension() : f => f
+)(Redux.createStore)
+
 const store = createStore(TreeReducers.TreeReducer)
 
 const containerNode = document.getElementById('container')
