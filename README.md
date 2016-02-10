@@ -52,7 +52,15 @@ In Web.config, enable CORS:
 
 ## Build, test and run
 
-Install node modules:
+There are only two global npm dependencies:
+
+```
+> npm i -g gulp
+> npm i -g browserify
+```
+
+When you have gulp and browserify installed globally, install all the development dependencies:
+
 ```
 > npm i
 ```
