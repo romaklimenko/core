@@ -6,6 +6,8 @@ const Immutable = require('immutable')
 
 const SitecoreRepository = require('../sitecore-repository')
 
+const templatesItemId = '{3C1715FE-6A13-4FCF-845F-DE308BA9741D}'
+
 if (process.env.TRAVIS) {
   test = (name) => {
     console.warn('"' + name
@@ -14,8 +16,7 @@ if (process.env.TRAVIS) {
 }
 
 test('SitecoreRepository.getChildren', (assert) => {
-  const templatesItemId = '{3C1715FE-6A13-4FCF-845F-DE308BA9741D}'
-  const promise = SitecoreRepository.getChildren(templatesItemId)
+  SitecoreRepository.getChildren(templatesItemId)
     .then(children => {
       assert.equal(children.length, 7)
       assert.end() })
@@ -25,10 +26,9 @@ test('SitecoreRepository.getChildren', (assert) => {
 })
 
 test('SitecoreRepository.getItem', (assert) => {
-  const templatesItemId = '{3C1715FE-6A13-4FCF-845F-DE308BA9741D}'
-  const promise = SitecoreRepository.getItem(templatesItemId)
+  SitecoreRepository.getItem(templatesItemId)
     .then(item => {
-      assert.equal(item.ID, '{3C1715FE-6A13-4FCF-845F-DE308BA9741D}')
+      assert.equal(item.ID, templatesItemId)
       assert.end() })
     .catch(reason => {
       assert.fail(reason)
