@@ -20,7 +20,7 @@ const run = (command, callback) => {
 gulp.task('default', ['copy', 'less', 'browserify'])
 
 gulp.task('browserify', (callback) => {
-  run('node_modules/browserify/bin/cmd.js scripts/core.js -o dist/bundle.js', callback)
+  run('browserify scripts/core.js -o dist/bundle.js', callback)
   gulp.src('main.js').pipe(gulp.dest('dist'))
 })
 
