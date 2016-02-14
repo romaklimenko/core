@@ -1,24 +1,19 @@
-'use strict'
-{
-  const test = require('tape')
+import test from 'tape'
+import * as Immutable from 'immutable'
+import InitialState from '../initial-state'
 
-  const Immutable = require('immutable')
+test('InitialState behaves as expected', (assert) => {
+  assert.equal(InitialState.get('tree').count(), 1)
 
-  const InitialState = require('../initial-state')
+  const state = InitialState.setIn(['tree', '[A]'], Immutable.fromJS({ path: '[A]' }))
 
-  test('InitialState behaves as expected', (assert) => {
-    assert.equal(InitialState.get('tree').count(), 1)
+  assert.equal(
+    state.getIn(['tree', '/{11111111-1111-1111-1111-111111111111}', 'path']),
+    '/{11111111-1111-1111-1111-111111111111}')
+  assert.equal(state.getIn(['tree', '[A]', 'path']), '[A]')
 
-    const state = InitialState.setIn(['tree', '[A]'], Immutable.fromJS({ path: '[A]' }))
+  assert.equal(InitialState.get('tree').count(), 1)
+  assert.equal(state.get('tree').count(), 2)
 
-    assert.equal(
-      state.getIn(['tree', '/{11111111-1111-1111-1111-111111111111}', 'path']),
-      '/{11111111-1111-1111-1111-111111111111}')
-    assert.equal(state.getIn(['tree', '[A]', 'path']), '[A]')
-
-    assert.equal(InitialState.get('tree').count(), 1)
-    assert.equal(state.get('tree').count(), 2)
-
-    assert.end()
-  })
-}
+  assert.end()
+})

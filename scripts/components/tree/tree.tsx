@@ -1,63 +1,60 @@
-'use strict'
-{
-  const Immutable = require('immutable')
-  const React = require('react')
+import * as Immutable from 'immutable'
+import * as React from 'react'
 
-  const TreeActions = require('./tree-actions')
-  const TreeUtils = require('./tree-utils')
+import * as TreeActions from './tree-actions'
+import * as TreeUtils from './tree-utils'
 
-  const Tree = (props) => {
-    const getArrow = (state, path) => {
-      if (props.state.getIn(['tree', path, 'loading'])) {
-        return 'img/loading.svg'
-      }
-
-      if (TreeUtils.children(state, path).count() === 0) {
-        if (props.state.getIn(['tree', path, 'hasChildren'])) {
-          return 'img/arrow-collapse.svg'
-        }
-        return 'img/refresh.svg'
-      }
-      else {
-        return 'img/arrow-expand.svg'
-      }
+export const Tree = (props) => {
+  const getArrow = (state, path) => {
+    if (props.state.getIn(['tree', path, 'loading'])) {
+      return 'img/loading.svg'
     }
 
-    const toggle = (e) => {
-      e.stopPropagation()
-      if (TreeUtils.children(props.state, props.path).count() > 0) {
-        props.dispatch(TreeActions.collapse(props.path))
+    if (TreeUtils.children(state, path).count() === 0) {
+      if (props.state.getIn(['tree', path, 'hasChildren'])) {
+        return 'img/arrow-collapse.svg'
       }
-      else {
-        props.dispatch(TreeActions.expand(props.path))
-      }
+      return 'img/refresh.svg'
     }
-
-    const select = (e) => {
-      e.stopPropagation()
-      props.dispatch(TreeActions.select(props.path))
+    else {
+      return 'img/arrow-expand.svg'
     }
-
-    const className = props.state.get('currentTreeNode') === props.path ?
-      'tree-selected' : undefined
-
-    return React.createElement('ul', null,
-      React.createElement('div', { onClick: (e) => select(e), className: className },
-        React.createElement('img', {
-          onClick: (e) => toggle(e),
-          src: getArrow(props.state, props.path),
-          style: { heigth: '16px', width: '16px' }
-        }),
-        React.createElement('span', null, props.state.getIn(['tree', props.path, 'name']))),
-      React.createElement('ul', null,
-        TreeUtils.children(props.state, props.path).map((child) => {
-          return React.createElement(Tree, {
-            key: child.get('path'),
-            dispatch: props.dispatch,
-            path: child.get('path'),
-            state: props.state })
-        }).toArray()))
   }
 
-  module.exports = Tree
+  const toggle = (e) => {
+    e.stopPropagation()
+    if (TreeUtils.children(props.state, props.path).count() > 0) {
+      props.dispatch(TreeActions.collapse(props.path))
+    }
+    else {
+      props.dispatch(TreeActions.expand(props.path))
+    }
+  }
+
+  const select = (e) => {
+    e.stopPropagation()
+    props.dispatch(TreeActions.select(props.path))
+  }
+
+  const className = props.state.get('currentTreeNode') === props.path ?
+    'tree-selected' : undefined
+
+  return React.createElement('ul', null,
+    React.createElement('div', { onClick: (e) => select(e), className: className },
+      React.createElement('img', {
+        onClick: (e) => toggle(e),
+        src: getArrow(props.state, props.path),
+        style: { heigth: '16px', width: '16px' }
+      }),
+      React.createElement('span', null, props.state.getIn(['tree', props.path, 'name']))),
+    React.createElement('ul', null,
+      TreeUtils.children(props.state, props.path).map((child) => {
+        return React.createElement(Tree, {
+          key: child.get('path'),
+          dispatch: props.dispatch,
+          path: child.get('path'),
+          state: props.state })
+      }).toArray()))
 }
+
+export default Tree

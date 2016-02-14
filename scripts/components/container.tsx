@@ -1,22 +1,25 @@
 'use strict'
-{
-  const React = require('react')
 
-  const Content = require('./content')
-  const Footer = require('./footer')
-  const Tree = require('./tree/tree')
+import * as React from 'react'
 
-  const Container = (props) => {
-    return React.createElement('div', { className: 'flex-container' },
-      React.createElement('div', { className: 'flex-row' },
-        React.createElement('aside', { className: 'tree' },
-          React.createElement(Tree, {
-            key: props.state.get('tree').first().get('path'),
-            path: props.state.get('tree').first().get('path'),
-            dispatch: props.dispatch, state: props.state })),
-        React.createElement(Content, { state: props.state })),
-        React.createElement(Footer, { database: 'master' }))
-  }
+import Content from './content'
+import Footer from './footer'
+import Tree from './tree/tree'
 
-  module.exports = Container
+export interface IContainerProps {
+  className: string
 }
+// TODO: check types
+const Container = (props: { className: string, dispatch: any, state: any }) => {
+  return React.createElement('div', { className: 'flex-container' },
+    React.createElement('div', { className: 'flex-row' },
+      React.createElement('aside', { className: 'tree' },
+        React.createElement(Tree, {
+          key: props.state.get('tree').first().get('path'),
+          path: props.state.get('tree').first().get('path'),
+          dispatch: props.dispatch, state: props.state })),
+      React.createElement(Content, { state: props.state })),
+      React.createElement(Footer, { database: 'master' }))
+}
+
+export default Container

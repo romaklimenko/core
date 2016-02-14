@@ -1,10 +1,7 @@
-'use strict'
-{
-  const React = require('react')
+import * as React from 'react'
 
-  const Footer = (props) => {
-    return React.createElement('footer', { id: 'footer' },
-      React.createElement('div', null, props.database)) }
+export const Footer = (props) => {
+  return React.createElement('footer', { id: 'footer' },
+    React.createElement('div', null, props.database)) }
 
-  module.exports = Footer
-}
+export default Footer

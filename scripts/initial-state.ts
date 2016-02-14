@@ -1,13 +1,11 @@
-'use strict'
-{
-  const Immutable = require('immutable')
+import * as Immutable from 'immutable'
 
-  module.exports = Immutable.Map().set('tree', Immutable.OrderedMap())
-    .setIn(
-      ['tree', '/{11111111-1111-1111-1111-111111111111}'],
-      Immutable.fromJS({
-        id: '{11111111-1111-1111-1111-111111111111}',
-        name: 'sitecore',
-        path: '/{11111111-1111-1111-1111-111111111111}'
-      }))
-}
+export default Immutable.Map<string, any>()
+  .set('tree', Immutable.OrderedMap())
+  .setIn(
+    ['tree', '/{11111111-1111-1111-1111-111111111111}'],
+    Immutable.fromJS({
+      id: '{11111111-1111-1111-1111-111111111111}',
+      name: 'sitecore',
+      path: '/{11111111-1111-1111-1111-111111111111}'
+    }))
