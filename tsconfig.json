@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "jsx": "react",
-    "outDir": "build",
-    "target": "es6"
+    "outDir": "build/es2015",
+    "target": "es2015"
   },
   "exclude": [
     "dist",

@@ -3,11 +3,15 @@
   "version": "0.0.3",
   "description": "⚛",
   "devDependencies": {
+    "babel-cli": "*",
+    "babel-preset-es2015": "*",
     "bootstrap": "*",
     "browserify": "*",
     "del": "*",
     "electron-prebuilt": "*",
     "gulp": "*",
+    "gulp-babel": "*",
+    "gulp-browserify": "*",
     "gulp-less": "*",
     "immutable": "*",
     "react": "*",
@@ -16,14 +20,14 @@
     "react-redux": "*",
     "react-test-utils": "*",
     "redux": "*",
-    "redux-thunk": "*",
     "superagent": "*",
-    "tape": "*"
+    "tape": "*",
+    "typescript": "*"
   },
   "main": "main.js",
   "scripts": {
     "start": "electron dist",
-    "test": "tape \"scripts/**/*test.js\""
+    "test": "tape \"build/js/**/*test.js\""
   },
   "repository": {
     "type": "git",

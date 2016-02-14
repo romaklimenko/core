@@ -3,9 +3,7 @@ import * as Immutable from 'immutable'
 import InitialState from '../../initial-state'
 import * as TreeConstants from './tree-constants'
 
-export const TreeReducer = (state, action) => {
-  if (!state) state = InitialState
-
+export const TreeReducer = (state = InitialState, action) => {
   if (action.type === '@@redux/INIT') { return state }
 
   switch (action.type) {

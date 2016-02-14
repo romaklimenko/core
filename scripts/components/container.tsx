@@ -10,7 +10,7 @@ export interface IContainerProps {
   className: string
 }
 // TODO: check types
-const Container = (props: { className: string, dispatch: any, state: any }) => {
+export const Container = (props: { className: string, dispatch: any, state: any }) => {
   return React.createElement('div', { className: 'flex-container' },
     React.createElement('div', { className: 'flex-row' },
       React.createElement('aside', { className: 'tree' },

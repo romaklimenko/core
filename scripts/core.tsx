@@ -3,19 +3,19 @@ import * as ReactDOM from 'react-dom'
 import * as ReactRedux from 'react-redux'
 import * as Redux from 'redux'
 
-import Container from './components/container'
+import { Container } from './components/container'
 
-// middlewares
-import * as thunk from 'redux-thunk' // TODO: use local
-import logger from './middleware/logger'
-import perf from './tools/perf'
+import { Logger } from './middleware/logger'
+import { Thunk } from './middleware/thunk' // TODO: use local
+
+import { perf } from './tools/perf'
 
 import * as TreeActions from './components/tree/tree-actions'
 import * as TreeReducers from './components/tree/tree-reducers'
 
 const createStore = Redux.compose(
-  Redux.applyMiddleware(logger),
-  Redux.applyMiddleware(thunk),
+  Redux.applyMiddleware(Thunk),
+  Redux.applyMiddleware(Logger),
   window['devToolsExtension'] ? window['devToolsExtension']() : f => f
 )(Redux.createStore)
 
