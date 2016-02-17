@@ -22,7 +22,7 @@
     "redux": "*",
     "superagent": "*",
     "tape": "*",
-    "typescript": "*"
+    "typescript": "1.8.0"
   },
   "main": "main.js",
   "scripts": {
