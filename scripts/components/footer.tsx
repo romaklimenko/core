@@ -1,7 +1,13 @@
 import * as React from 'react'
 
-export const Footer = (props) => {
-  return React.createElement('footer', { id: 'footer' },
-    React.createElement('div', null, props.database)) }
+export interface IFooterProps {
+  database: string
+}
+
+export const Footer = (props: IFooterProps) => {
+  return  <footer id="footer">
+            <div>{props.database}</div>
+          </footer>
+}
 
 export default Footer

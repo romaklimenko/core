@@ -39,22 +39,29 @@ export const Tree = (props) => {
   const className = props.state.get('currentTreeNode') === props.path ?
     'tree-selected' : undefined
 
-  return React.createElement('ul', null,
-    React.createElement('div', { onClick: (e) => select(e), className: className },
-      React.createElement('img', {
-        onClick: (e) => toggle(e),
-        src: getArrow(props.state, props.path),
-        style: { heigth: '16px', width: '16px' }
-      }),
-      React.createElement('span', null, props.state.getIn(['tree', props.path, 'name']))),
-    React.createElement('ul', null,
-      TreeUtils.children(props.state, props.path).map((child) => {
-        return React.createElement(Tree, {
-          key: child.get('path'),
-          dispatch: props.dispatch,
-          path: child.get('path'),
-          state: props.state })
-      }).toArray()))
+  return  <ul>
+            <div className={ className } onClick={ e => select(e) }>
+              <img
+                onClick={ e => toggle(e) }
+                src={getArrow(props.state, props.path)}
+                style={{ heigth: '16px', width: '16px' }} />
+              <span>
+                { props.state.getIn(['tree', props.path, 'name']) }
+              </span>
+            </div>
+            <ul>
+            {
+              TreeUtils.children(props.state, props.path).map((child) => {
+                return React.createElement(Tree, {
+                  key: child.get('path'),
+                  dispatch: props.dispatch,
+                  path: child.get('path'),
+                  state: props.state
+                })
+              }).toArray()
+            }
+            </ul>
+          </ul>
 }
 
 export default Tree
