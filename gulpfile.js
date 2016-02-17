@@ -45,7 +45,8 @@ gulp.task('copy-dist', () => {
   return gulp.src([
     'index.html',
     '*img/**/*',
-    'main.js'
+    'main.js',
+    'package.json'
   ]).pipe(gulp.dest('dist'))
 })
 
