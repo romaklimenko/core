@@ -17,4 +17,9 @@ export interface IReduxProps {
   state: IState
 }
 
+export interface IRepository {
+  getChildren(itemId: string): Promise<IItem[]>
+  getItem(itemId: string): Promise<IItem[]>
+}
+
 export interface IState extends Immutable.Map<string, any> { }

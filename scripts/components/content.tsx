@@ -7,6 +7,8 @@ const getFields = (state) => {
   return {}
 }
 
+export interface IContentProps { }
+
 export const Content = (props) => {
   const fields = getFields(props.state)
 

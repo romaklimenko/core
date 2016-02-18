@@ -1,10 +1,14 @@
+import { IState, IReduxProps } from '../interfaces'
+
 import * as React from 'react'
 
 import Content from './content'
 import { IFooterProps, Footer } from './footer'
 import Tree from './tree/tree'
 
-export const Container = (props: { className: string, dispatch: any, state: any }) => {
+export interface IContainerProps extends IReduxProps { }
+
+export const Container = (props: IContainerProps) => {
   const key = props.state.get('tree').first().get('path')
   const path = props.state.get('tree').first().get('path')
   return  <div className="flex-container">

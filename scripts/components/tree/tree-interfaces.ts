@@ -29,7 +29,3 @@ export interface ITreeFetchItemResponseAction extends IAction {
 export interface ITreeSelectAction extends IAction {
   path: string
 }
-
-export interface ITreeProps extends IReduxProps {
-  path: string
-}

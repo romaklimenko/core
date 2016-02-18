@@ -1,5 +1,4 @@
-import { IItem } from '../interfaces'
-import IRepository from './repository'
+import { IItem, IRepository } from '../interfaces'
 import * as request from 'superagent'
 
 const host = 'http://sitecore.api'

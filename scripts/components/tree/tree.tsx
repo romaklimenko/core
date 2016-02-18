@@ -1,4 +1,4 @@
-import { IState } from './../../interfaces'
+import { IState, IReduxProps } from './../../interfaces'
 import * as TreeInterfaces from 'tree-interfaces'
 
 import * as Immutable from 'immutable'
@@ -7,7 +7,11 @@ import * as React from 'react'
 import * as TreeActions from './tree-actions'
 import * as TreeUtils from './tree-utils'
 
-export const Tree = (props: TreeInterfaces.ITreeProps) => {
+export interface ITreeProps extends IReduxProps {
+  path: string
+}
+
+export const Tree = (props: ITreeProps) => {
   const getArrow = (state: IState, path: string) => {
     if (props.state.getIn(['tree', path, 'loading'])) {
       return 'img/loading.svg'
