@@ -1,32 +1,36 @@
-'use strict'
+import { IAction, IState } from '../../../interfaces'
+import * as TreeInterfaces from '../tree-interfaces'
 
-const test = require('tape')
+import test from 'tape'
+import * as Immutable from 'immutable'
 
-const Immutable = require('immutable')
+import InitialState from '../../../initial-state'
 
-const InitialState = require('../../../initial-state')
-const TreeConstants = require('../tree-constants')
-const TreeReducers = require('../tree-reducers')
+import * as TreeConstants from '../tree-constants'
+import * as TreeReducers from '../tree-reducers'
 
 test('@@redux/INIT', (assert) => {
-  const state = Immutable.fromJS({a: 'a', b: { c: 'c' }})
-  const action = { type: '@@redux/INIT' }
-  const newState = TreeReducers.TreeReducer(state, action)
+  const state: IState = Immutable.fromJS({a: 'a', b: { c: 'c' }})
+  const action: IAction = { type: '@@redux/INIT' }
+  const newState: IState = TreeReducers.TreeReducer(state, action)
   assert.equal(state, newState)
   assert.end()
 })
 
 test('TreeReducer returns InitialState if passed state is undefined.', (assert) => {
-  const action = { type: '@@redux/INIT' }
-  const state = TreeReducers.TreeReducer(undefined, action)
+  const action: IAction = { type: '@@redux/INIT' }
+  const state: IState = TreeReducers.TreeReducer(undefined, action)
   assert.equal(state, InitialState)
   assert.end()
 })
 
 test('TreeReducer.TREE_COLLAPSE', (assert) => {
-  const action = { type: TreeConstants.TREE_COLLAPSE, path: '/{11111111-1111-1111-1111-111111111111}/A' }
+  const action: TreeInterfaces.ITreeCollapseAction = {
+    type: TreeConstants.TREE_COLLAPSE,
+    path: '/{11111111-1111-1111-1111-111111111111}/A'
+  }
 
-  const state = InitialState
+  const state: IState = InitialState
     .setIn(
       ['tree', '/{11111111-1111-1111-1111-111111111111}/A'],
       Immutable.fromJS({ path: '/{11111111-1111-1111-1111-111111111111}/A' }))
@@ -42,7 +46,7 @@ test('TreeReducer.TREE_COLLAPSE', (assert) => {
 
   assert.equal(state.get('tree').count(), 5)
 
-  const newState = TreeReducers.TreeReducer(state, action)
+  const newState: IState = TreeReducers.TreeReducer(state, action)
 
   assert.equal(newState.get('tree').count(), 2)
 
@@ -50,18 +54,21 @@ test('TreeReducer.TREE_COLLAPSE', (assert) => {
 })
 
 test('TreeReducer.TREE_EXPAND', (assert) => {
-  const action = { type: TreeConstants.TREE_EXPAND, path: '/{11111111-1111-1111-1111-111111111111}' }
+  const action: TreeInterfaces.ITreeExpandAction = {
+    type: TreeConstants.TREE_EXPAND,
+    path: '/{11111111-1111-1111-1111-111111111111}'
+  }
 
-  const state = InitialState
+  const state: IState = InitialState
 
-  const newState = TreeReducers.TreeReducer(state, action)
+  const newState: IState = TreeReducers.TreeReducer(state, action)
 
   assert.equal(newState.getIn(['tree', action.path, 'loading']), true)
   assert.end()
 })
 
 test('TreeReducer.TREE_FETCH_CHILDREN_RESPONSE', (assert) => {
-  const action = {
+  const action: TreeInterfaces.ITreeFetchChildrenAction = {
     type: TreeConstants.TREE_FETCH_CHILDREN_RESPONSE,
     path: '/{11111111-1111-1111-1111-111111111111}',
     children: [
@@ -71,11 +78,12 @@ test('TreeReducer.TREE_FETCH_CHILDREN_RESPONSE', (assert) => {
     ]
   }
 
-  const state = InitialState.setIn(['tree', '/{11111111-1111-1111-1111-111111111111}', 'loading'], true)
+  const state: IState = InitialState.setIn(
+    ['tree', '/{11111111-1111-1111-1111-111111111111}', 'loading'], true)
   assert.equal(state.get('tree').count(), 1)
   assert.equal(state.getIn(['tree', action.path, 'loading']), true)
 
-  const newState = TreeReducers.TreeReducer(state, action)
+  const newState: IState = TreeReducers.TreeReducer(state, action)
 
   assert.equal(newState.getIn(['tree', action.path, 'loading']), false)
   assert.equal(newState.get('tree').count(), 4)
@@ -83,7 +91,7 @@ test('TreeReducer.TREE_FETCH_CHILDREN_RESPONSE', (assert) => {
 })
 
 test('TreeReducer.TREE_FETCH_ITEM_RESPONSE', (assert) => {
-  const action = {
+  const action: TreeInterfaces.ITreeFetchItemResponseAction = {
     type: TreeConstants.TREE_FETCH_ITEM_RESPONSE,
     path: '/{11111111-1111-1111-1111-111111111111}',
     item: {
@@ -94,9 +102,9 @@ test('TreeReducer.TREE_FETCH_ITEM_RESPONSE', (assert) => {
     }
   }
 
-  const state = InitialState
+  const state: IState = InitialState
 
-  const newState = TreeReducers.TreeReducer(state, action)
+  const newState: IState = TreeReducers.TreeReducer(state, action)
 
   assert.equal(newState.getIn(['tree', action.path, 'loading']), false)
   assert.equal(newState.getIn(['tree', action.path, 'id']), action.item.ID)
@@ -109,12 +117,12 @@ test('TreeReducer.TREE_FETCH_ITEM_RESPONSE', (assert) => {
 })
 
 test('TreeReducer.TREE_SELECT', (assert) => {
-  const action = {
+  const action: TreeInterfaces.ITreeSelectAction = {
     type: TreeConstants.TREE_SELECT,
     path: '/{11111111-1111-1111-1111-111111111111}/A/AA'
   }
 
-  const state = InitialState
+  const state: IState = InitialState
     .setIn(
       ['tree', '/{11111111-1111-1111-1111-111111111111}/A'],
       Immutable.fromJS({ path: '/{11111111-1111-1111-1111-111111111111}/A' }))
@@ -128,7 +136,7 @@ test('TreeReducer.TREE_SELECT', (assert) => {
       ['tree', '/{11111111-1111-1111-1111-111111111111}/A/AB'],
       Immutable.fromJS({ path: '/{11111111-1111-1111-1111-111111111111}/A/AB' }))
 
-  const newState = TreeReducers.TreeReducer(state, action)
+  const newState: IState = TreeReducers.TreeReducer(state, action)
 
   assert.equal(newState.get('currentTreeNode'), action.path)
   assert.equal(newState.getIn(['tree', action.path, 'loading']), true)

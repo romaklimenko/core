@@ -1,8 +1,9 @@
-'use strict'
+import { IState } from './interfaces'
 
-const Immutable = require('immutable')
+import * as Immutable from 'immutable'
 
-module.exports = Immutable.Map().set('tree', Immutable.OrderedMap())
+export const InitialState: IState = Immutable.Map<string, any>()
+  .set('tree', Immutable.OrderedMap())
   .setIn(
     ['tree', '/{11111111-1111-1111-1111-111111111111}'],
     Immutable.fromJS({
@@ -10,3 +11,5 @@ module.exports = Immutable.Map().set('tree', Immutable.OrderedMap())
       name: 'sitecore',
       path: '/{11111111-1111-1111-1111-111111111111}'
     }))
+
+export default InitialState

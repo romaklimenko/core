@@ -1,13 +1,11 @@
-'use strict'
+import { IAction, IState } from '../interfaces'
+import * as TreeInterfaces from './tree-interfaces'
+import * as Immutable from 'immutable'
 
-const Immutable = require('immutable')
+import InitialState from '../../initial-state'
+import * as TreeConstants from './tree-constants'
 
-const InitialState = require('../../initial-state')
-const TreeConstants = require('./tree-constants')
-
-const TreeReducer = (state, action) => {
-  if (!state) state = InitialState
-
+export const TreeReducer: Redux.Reducer = (state: IState = InitialState, action) => {
   if (action.type === '@@redux/INIT') { return state }
 
   switch (action.type) {
@@ -25,19 +23,17 @@ const TreeReducer = (state, action) => {
         .setIn(['tree', action.path, 'loading'], true)
 
     case TreeConstants.TREE_FETCH_CHILDREN_RESPONSE:
-      let newState = state
-      action.children.map(v => {
-        newState = newState.setIn(
-          ['tree', v.LongID],
+      return action.children.reduce((p, c) => {
+        return p.setIn(
+          ['tree', c.LongID],
           Immutable.fromJS({
-            id: v.ID,
-            name: v.DisplayName,
-            path: v.LongID,
-            hasChildren: v.HasChildren,
-            data: v
+            id: c.ID,
+            name: c.DisplayName,
+            path: c.LongID,
+            hasChildren: c.HasChildren,
+            data: c
           }))
-      })
-      return newState.setIn(['tree', action.path, 'loading'], false)
+      }, state).setIn(['tree', action.path, 'loading'], false)
 
     case TreeConstants.TREE_FETCH_CHILDREN_FAILURE:
       console.error(action.reason)
@@ -47,12 +43,14 @@ const TreeReducer = (state, action) => {
 
     case TreeConstants.TREE_FETCH_ITEM_RESPONSE:
       return state
-        .setIn(['tree', action.path, 'loading'], false)
-        .setIn(['tree', action.path, 'id'], action.item.ID)
-        .setIn(['tree', action.path, 'name'], action.item.DisplayName)
-        .setIn(['tree', action.path, 'path'], action.item.LongID)
-        .setIn(['tree', action.path, 'hasChildren'], action.item.HasChildren)
-        .setIn(['tree', action.path, 'data'], Immutable.fromJS(action.item))
+        .setIn(['tree', action.path], Immutable.fromJS({
+          loading: false,
+          id: action.item.ID,
+          name: action.item.DisplayName,
+          path: action.item.LongID,
+          hasChildren: action.item.HasChildren,
+          data: Immutable.fromJS(action.item)
+        }))
 
     case TreeConstants.TREE_FETCH_ITEM_FAILURE:
       console.error(action.reason)
@@ -64,5 +62,3 @@ const TreeReducer = (state, action) => {
       return state
   }
 }
-
-module.exports = { TreeReducer }

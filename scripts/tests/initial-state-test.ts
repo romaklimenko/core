@@ -1,10 +1,6 @@
-'use strict'
-
-const test = require('tape')
-
-const Immutable = require('immutable')
-
-const InitialState = require('../initial-state')
+import test from 'tape'
+import * as Immutable from 'immutable'
+import InitialState from '../initial-state'
 
 test('InitialState behaves as expected', (assert) => {
   assert.equal(InitialState.get('tree').count(), 1)

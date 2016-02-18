@@ -1,6 +1,4 @@
-'use strict'
-
-const perf = (func, message) => {
+export const perf = (func, message) => {
   const start = performance.now()
   const result = func()
   const end = performance.now()
@@ -8,4 +6,4 @@ const perf = (func, message) => {
   return result
 }
 
-module.exports = perf
+export default perf

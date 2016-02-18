@@ -1,0 +1,7 @@
+export const TREE_EXPAND                   = 'TREE_EXPAND'
+export const TREE_COLLAPSE                 = 'TREE_COLLAPSE'
+export const TREE_FETCH_CHILDREN_FAILURE   = 'TREE_FETCH_CHILDREN_FAILURE'
+export const TREE_FETCH_CHILDREN_RESPONSE  = 'TREE_FETCH_CHILDREN_RESPONSE'
+export const TREE_FETCH_ITEM_FAILURE       = 'TREE_FETCH_ITEM_FAILURE'
+export const TREE_FETCH_ITEM_RESPONSE      = 'TREE_FETCH_ITEM_RESPONSE'
+export const TREE_SELECT                   = 'TREE_SELECT'

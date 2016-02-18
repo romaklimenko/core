@@ -1,15 +1,11 @@
-'use strict'
+import { IState } from '../../../interfaces'
 
-const test = require('tape')
-
-const Immutable = require('immutable')
-
-const InitialState = require('../../../initial-state')
-const TreeUtils = require('../tree-utils')
+import test from 'tape'
+import * as Immutable from 'immutable'
+import InitialState from '../../../initial-state'
+import * as TreeUtils from '../tree-utils'
 
 const getTestState = () => {
-  let state = InitialState
-
   const array = [
     { path: '/{11111111-1111-1111-1111-111111111111}/[A]' },
     { path: '/{11111111-1111-1111-1111-111111111111}/[A]/[AA]' },
@@ -19,18 +15,18 @@ const getTestState = () => {
     { path: '/{11111111-1111-1111-1111-111111111111}/[A]/[AB]/[ABA]' },
     { path: '/{11111111-1111-1111-1111-111111111111}/[A]/[AB]/[ABB]' },
     { path: '/{11111111-1111-1111-1111-111111111111}/[A]/[AC]' }]
-  array.map((v) => {
-    state = state.setIn(['tree', v.path], Immutable.fromJS(v))
-  })
-  return state
+
+  return <IState>array.reduce((previous, current) => {
+    return previous.setIn(['tree', current.path], Immutable.fromJS(current))
+  }, InitialState)
 }
 
-const assertTreeNode = (assert, state, path) => {
+const assertTreeNode = (assert, state: IState, path: string) => {
   assert.equal(state.getIn(['tree', path, 'path']), path)
 }
 
 test('getTestState works as expected', (assert) => {
-  const state = getTestState()
+  const state: IState = getTestState()
 
   assertTreeNode(assert, state, '/{11111111-1111-1111-1111-111111111111}')
   assertTreeNode(assert, state, '/{11111111-1111-1111-1111-111111111111}/[A]')
@@ -48,7 +44,7 @@ test('getTestState works as expected', (assert) => {
 })
 
 test('TreeUtils.children', (assert) => {
-  const state = getTestState()
+  const state: IState = getTestState()
   assert.equal(TreeUtils.children(state, '/{11111111-1111-1111-1111-111111111111}').count(), 1)
   assert.equal(TreeUtils.children(state, '/{11111111-1111-1111-1111-111111111111}/[A]').count(), 3)
   assert.equal(TreeUtils.children(state, '/{11111111-1111-1111-1111-111111111111}/[A]/[AA]').count(), 2)
@@ -64,7 +60,7 @@ test('TreeUtils.children', (assert) => {
 })
 
 test('TreeUtils.children().map', (assert) => {
-  const state = getTestState()
+  const state: IState = getTestState()
 
   const children = TreeUtils.children(state, '/{11111111-1111-1111-1111-111111111111}/[A]')
   children.map(v => {
