@@ -1,11 +1,14 @@
+import { IState } from './../../interfaces'
+import * as TreeInterfaces from 'tree-interfaces'
+
 import * as Immutable from 'immutable'
 import * as React from 'react'
 
 import * as TreeActions from './tree-actions'
 import * as TreeUtils from './tree-utils'
 
-export const Tree = (props) => {
-  const getArrow = (state, path) => {
+export const Tree = (props: TreeInterfaces.ITreeProps) => {
+  const getArrow = (state: IState, path: string) => {
     if (props.state.getIn(['tree', path, 'loading'])) {
       return 'img/loading.svg'
     }
@@ -36,7 +39,7 @@ export const Tree = (props) => {
     props.dispatch(TreeActions.select(props.path))
   }
 
-  const className = props.state.get('currentTreeNode') === props.path ?
+  const className: string = props.state.get('currentTreeNode') === props.path ?
     'tree-selected' : undefined
 
   return  <ul>
@@ -52,12 +55,11 @@ export const Tree = (props) => {
             <ul>
             {
               TreeUtils.children(props.state, props.path).map((child) => {
-                return React.createElement(Tree, {
-                  key: child.get('path'),
-                  dispatch: props.dispatch,
-                  path: child.get('path'),
-                  state: props.state
-                })
+                return  <Tree
+                          key={ child.get('path') }
+                          dispatch={ props.dispatch }
+                          path={ child.get('path') }
+                          state={ props.state } />
               }).toArray()
             }
             </ul>

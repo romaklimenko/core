@@ -1,6 +1,8 @@
+import { IItem } from '../interfaces'
+
 export interface IRepository {
-  getChildren(itemId: string): Promise<any[]> // TODO: IItem
-  getItem(itemId: string): Promise<any[]> // TODO: IItem
+  getChildren(itemId: string): Promise<IItem[]>
+  getItem(itemId: string): Promise<IItem[]>
 }
 
 export default IRepository
