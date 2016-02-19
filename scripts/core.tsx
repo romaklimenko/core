@@ -6,7 +6,7 @@ import * as Redux from 'redux'
 import { Container } from './components/container'
 
 import { Logger } from './middleware/logger'
-import { Thunk } from './middleware/thunk' // TODO: use local
+import { Thunk } from './middleware/thunk'
 
 import { perf } from './tools/perf'
 
