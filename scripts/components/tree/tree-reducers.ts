@@ -1,4 +1,4 @@
-import { IAction, IState } from '../interfaces'
+import { IAction, IState } from '../../interfaces'
 import * as TreeInterfaces from './tree-interfaces'
 import * as Immutable from 'immutable'
 
