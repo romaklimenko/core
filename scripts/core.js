@@ -4,18 +4,18 @@ const React = require('react')
 const ReactDOM = require('react-dom')
 const ReactRedux = require('react-redux')
 const Redux = require('redux')
-const Thunk = require('redux-thunk')
 
 const Container = require('./components/container')
 const Logger = require('./middleware/logger')
+const Thunk = require('./middleware/thunk')
 const TreeActions = require('./components/tree/tree-actions')
 const TreeReducers = require('./components/tree/tree-reducers')
 
 const perf = require('./tools/perf')
 
 const createStore = Redux.compose(
-  Redux.applyMiddleware(Logger),
   Redux.applyMiddleware(Thunk),
+  Redux.applyMiddleware(Logger),
   window.devToolsExtension ? window.devToolsExtension() : f => f
 )(Redux.createStore)
 

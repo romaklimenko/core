@@ -12,11 +12,8 @@
     "immutable": "*",
     "react": "*",
     "react-dom": "*",
-    "react-addons-test-utils": "*",
     "react-redux": "*",
-    "react-test-utils": "*",
     "redux": "*",
-    "redux-thunk": "*",
     "superagent": "*",
     "tape": "*"
   },
