@@ -25,19 +25,17 @@ const TreeReducer = (state, action) => {
         .setIn(['tree', action.path, 'loading'], true)
 
     case TreeConstants.TREE_FETCH_CHILDREN_RESPONSE:
-      let newState = state
-      action.children.map(v => {
-        newState = newState.setIn(
-          ['tree', v.LongID],
+      return action.children.reduce((p, c) => {
+        return p.setIn(
+          ['tree', c.LongID],
           Immutable.fromJS({
-            id: v.ID,
-            name: v.DisplayName,
-            path: v.LongID,
-            hasChildren: v.HasChildren,
-            data: v
+            id: c.ID,
+            name: c.DisplayName,
+            path: c.LongID,
+            hasChildren: c.HasChildren,
+            data: c
           }))
-      })
-      return newState.setIn(['tree', action.path, 'loading'], false)
+      }, state).setIn(['tree', action.path, 'loading'], false)
 
     case TreeConstants.TREE_FETCH_CHILDREN_FAILURE:
       console.error(action.reason)
