@@ -8,8 +8,6 @@ const InitialState = require('../../../initial-state')
 const TreeUtils = require('../tree-utils')
 
 const getTestState = () => {
-  let state = InitialState
-
   const array = [
     { path: '/{11111111-1111-1111-1111-111111111111}/[A]' },
     { path: '/{11111111-1111-1111-1111-111111111111}/[A]/[AA]' },
@@ -19,10 +17,9 @@ const getTestState = () => {
     { path: '/{11111111-1111-1111-1111-111111111111}/[A]/[AB]/[ABA]' },
     { path: '/{11111111-1111-1111-1111-111111111111}/[A]/[AB]/[ABB]' },
     { path: '/{11111111-1111-1111-1111-111111111111}/[A]/[AC]' }]
-  array.map((v) => {
-    state = state.setIn(['tree', v.path], Immutable.fromJS(v))
-  })
-  return state
+  return array.reduce((p, c) => {
+    return p.setIn(['tree', c.path], Immutable.fromJS(c))
+  }, InitialState)
 }
 
 const assertTreeNode = (assert, state, path) => {
