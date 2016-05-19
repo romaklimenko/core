@@ -21,7 +21,7 @@ Here are main technologies on which Core is based on:
  * [React](https://facebook.github.io/react/)
  * [Redux](http://redux.js.org/)
 
-But I didn't intend to use as many buzzwords as possible. I take simplicity, ease of adding new features and supportability at the first place. This is why there is no TypeScript, JSX and Babel traspillers at the current stage of the project.
+But I didn't intend to use as many buzzwords as possible. I take simplicity, ease of adding new features and supportability at the first place. This is why there is no TypeScript, JSX and Babel traspilers at the current stage of the project.
 
 
 ## Setting up Sitecore
